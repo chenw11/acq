@@ -4,49 +4,61 @@
 #include "MyXOP.h"
 
 
+using namespace eas_lab::acq::DmdCam;
 
-/*
-	Define functions to export, and their parameter structures, here
-*/
 
-#pragma pack(2)	// All structures passed to Igor are two-byte aligned.
-typedef struct {
-	double p2;
-	double p1;
-	double result;
-} MyFuncParams;
-#pragma pack()
+#define XF eas_lab::acq::DmdCam::DmdCamXopFrame
+#define X (XF::Default)
 
-static int MyFunc(MyFuncParams* p)
+// parameters are listed in reverse order, with result at the end
+// this is the reverse of the resource file format
+typedef struct { double ret; } P0;
+
+template<typename T> struct P1 { T arg1; double ret; } ;
+
+template<typename T1, typename T2> struct P2 {  // parameter order is backwards!
+	T2 arg2;  // 2nd param
+	T1 arg1;  // 1st param
+	double ret; //return value
+} ;
+
+// error handling.  h is the error handler.  either catch and return code, or let exceptions bubble up
+#ifdef _DEBUG
+	#define DoWith(h,x) { { x }; h 0; }
+#else
+	#define DoWith(h,x) { try {  { x }; h 0; } catch(System::Exception^ e) { h (int)XF::Error(e->Message); } }
+#endif
+#define Do(x) DoWith(return,x)
+
+
+#define NotNull( p ) { if ( (p) == NULL ) { return(ERROR_NULL_POINTER); } p->ret = 0; }
+#define ExpectStruct( a ) { if ( (a) == NULL ) { return(EXPECT_STRUCT); } }
+
+
+#define P0(name) static int name (P0* p) { NotNull(p); Do( X::Xop-> name (); ) }
+#define P0R(name) static int name (P0* p) { NotNull(p); Do( p->ret = X::Xop-> name (); ) }
+
+#define P1(name,structType) static int name (P1<structType*>* p) { NotNull(p); ExpectStruct( p->arg1);  Do( X::Xop-> name ( *(p->arg1) ); ); }
+
+#define PID_primitive(name, primType, primCast) static int name (P2<double, primType>* p) { NotNull(p); Do( X-> name ((int)(p-> arg1), p->arg2); ); }
+#define PID_struct(name, structType) static int name (P2<double, structType*>* p) { NotNull(p); ExpectStruct( p-> arg2); Do( X-> name ((int)(p-> arg1), *(p->arg2)); ); }
+
+// EXPORT 0
+static int DmdCam_Reset(P0* p)
 {
-	// call the static C# method.
-	p->result = p->p1 * p->p2;
-
-	// you could also allocate objects and do logic directly, here, in C++/CLI,
-	// but it is probably easier and safer to manage state in C#.
-	return(0); // XFunc error code
+	NotNull( p );
+	XF::Reset();
+	return 0;
 }
 
+PID_struct( DmdCam_Create, eas_lab::RectSize );  // EXPORT 1: screenId, expectedSize
 
-static int DmdCam_ShowWindows(MyFuncParams* p)
+PID_primitive( DmdCam_Preview, double, bool ); // EXPORT 2: screenId, visibility
+
+static int DmdCam_SetImage(P2<double, waveHndl>* p) // EXPORT 3: screenId, image white levels
 {
-	// call the static C# method.
-	//int hello = eas_lab::acq::DmdCam::DmdCamAPI::Hello();
-	int camId = eas_lab::acq::DmdCam::DmdCamAPI::CreateDmdCam_DLP3000();
-	eas_lab::acq::DmdCam::DmdCam^ c = eas_lab::acq::DmdCam::DmdCamAPI::GetDmdCam(camId);
-	c->ShowOutputScreen();
-	c->ShowPreview(false);
-	p->result = 0;
-
-	// you could also allocate objects and do logic directly, here, in C++/CLI,
-	// but it is probably easier and safer to manage state in C#.
-
-	return(0); // XFunc error code
+	return -1;
 }
-
-
-
-
 
 // returns function pointers for each exported function
 static XOPIORecResult RegisterFunction()
@@ -56,8 +68,13 @@ static XOPIORecResult RegisterFunction()
 	funcIndex = GetXOPItem(0);	/* which function are we getting the address of? */
 	switch (funcIndex) {
 		case 0:	
-			return((XOPIORecResult)MyFunc);  // This should now be 64-bit safe
-			break;
+			return((XOPIORecResult)DmdCam_Reset);  // This should now be 64-bit safe
+		case 1:
+			return((XOPIORecResult)DmdCam_Create);
+		case 2:
+			return((XOPIORecResult)DmdCam_Preview);
+		case 3:
+			return((XOPIORecResult)DmdCam_SetImage);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
 	}
@@ -65,6 +82,25 @@ static XOPIORecResult RegisterFunction()
 }
 
 
+/*
+	Global setup and cleanup code for this XOP.
+*/
+static void ReportError(System::String^ msg)
+{
+	array<unsigned char, 1>^ buffer = gcnew array<unsigned char>(msg->Length);
+	System::Text::ASCIIEncoding::ASCII->GetBytes(msg, 0, msg->Length, buffer, 0);
+	unsigned char* p = (unsigned char*)malloc(msg->Length);
+	System::Runtime::InteropServices::Marshal::Copy(buffer, 0, (System::IntPtr)p, msg->Length);
+	XOPNotice((char*)p);
+	free(p);
+}
+
+
+static void EnsureErrorHandlerIsSetup()
+{
+	if (XF::ErrorHandler == nullptr)
+		XF::ErrorHandler = gcnew System::Action<System::String^>(ReportError);
+}
 
 
 /*
@@ -85,7 +121,7 @@ static void GlobalSetup()
 static XOPIORecResult GlobalCleanup() 
 {
 	// do cleanup of any remaining managed code
-	eas_lab::acq::DmdCam::DmdCamAPI::Cleanup();
+	eas_lab::acq::DmdCam::DmdCamXopFrame::GlobalCleanup();
 	return 0; 
 } 
 
@@ -108,6 +144,8 @@ static void XOPEntry(void)
 		result = MESSAGE_UNSUPPORTED;
 	
 	SetXOPResult(result);
+
+	EnsureErrorHandlerIsSetup();
 }
 
 

@@ -48,21 +48,26 @@ namespace eas_lab.acq.DmdCam
             }
         }
 
-        public void ShowPreview(bool modal)
+        public void SetPreviewVisibility(bool visibility, bool modal)
         {
-            if (modal)
-                previewWindow.ShowDialog();
+            if (visibility)
+            {
+                if (modal)
+                    previewWindow.ShowDialog();
+                else
+                    previewWindow.Show();
+            }
             else
-                previewWindow.Show();
+                previewWindow.Hide();
         }
-
-        public void HidePreview() { previewWindow.Hide(); }
-
 
 
         protected override void RunOnceDisposer()
         {
-            previewWindow.Close();
+            if (previewWindow != null)
+                previewWindow.Close();
+            if (outputWindow != null)
+                outputWindow.Close();
         }
     }
 

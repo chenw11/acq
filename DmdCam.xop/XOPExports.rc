@@ -44,14 +44,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "MyXOP is an Igor Pro extension.\0"
+            VALUE "Comments", "DmdCamera is an Igor Pro extension.\0"
             VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "MyXOP is an Igor Pro extension.\0"
+            VALUE "FileDescription", "DmdCamera is an Igor Pro extension.\0"
             VALUE "FileVersion", "1, 0, 2, 0\0"
             VALUE "InternalName", "XOP1\0"
             VALUE "LegalCopyright", "Copyright 2013\0"
-            VALUE "OriginalFilename", "MyXOP.xop\0"
-            VALUE "ProductName", "Igor Pro MyXOP\0"
+            VALUE "OriginalFilename", "DmdCamera.xop\0"
+            VALUE "ProductName", "Igor Pro DmdCamera\0"
             VALUE "ProductVersion", "6, 2, 0, 0\0"
         END
     END
@@ -108,8 +108,23 @@ END
 
 1100 STR#					// Custom error messages.
 BEGIN
-	"This XOP requires Igor Pro 6.20 or later.\0",	// REQUIRES_IGOR_620
-	"This XOP doesn't support indirect function calls.\0",
+	"An error occured in the XOP.  Call GetScrapText() to see the message. \0", // 1
+	"This XOP requires Igor Pro 6.20 or later.\0",	// 2, REQUIRES_IGOR_620
+	"We don't export any indirect functions: verify that the XOPExports.rc matches RegisterFunction.\0", // 3
+	"Expected double-precision wave.\0", // 4
+	"Null pointer to parameter structure.\0", // 5
+	"Non-existent wave\0",  // 6
+	"Generic multidim wave failure\0",  // 7
+	"Incorrect dimension on wave\0",  // 8
+	"Invalid rectangle.\0",  // 9
+	"Invalid sample offset into 2D buffer.\0",  // 10
+	"No analog input has been recieved after several read attempts.  Verify that the camera is operating and that the trigger wiring is correct for your chosen SyncMode.\0",
+	"Already shutdown.\0",  // 12
+	"You must call complete the Setup steps, including Setup_Commit, before calling this function.\0",
+	"Already setup, so this function call is invalid.\0", // 14
+	"Acquisition completed, but frames were dropped.\0", // 15
+	"Somehow analog read got nRead < 0 without throwing a separate exception.  This should not happen.\0", // 16
+	"Invalid SyncMode.\0", // 17
 	// You can add error messages here.
 	
 	0,								// NOTE: 0 required to terminate the resource.
@@ -128,13 +143,10 @@ END
 
 1100 XOPF							// Describes functions added by XOP to IGOR.
 BEGIN
-	"MyFunc\0",					// Function name.
-	F_UTIL | F_EXTERNAL,			// Function category,
-	NT_FP64,						// Return value type.
-		NT_FP64,					// First parameter type.
-		NT_FP64,					// Second parameter type.
-		0,							// NOTE: 0 required to terminate list of parameter types.
-
+	P0("DmdCam_Reset\0"),						// EXPORT 0
+	P2("DmdCam_Create\0", TDbl, TStruct),	    // EXPORT 1: screenId, expectedSize
+	P2("DmdCam_Preview\0", TDbl, TDbl),			// EXPORT 2: screenId, visibility
+	P2("DmdCam_SetImage\0", TDbl, TWave),		// EXPORT 3: screenId, image white levels
 	// More function descriptions can appear here.
 	
 	0,								// NOTE: 0 required to terminate the resource.
