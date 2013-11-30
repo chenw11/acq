@@ -1,0 +1,148 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,2,0
+ PRODUCTVERSION 6,2,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "MyXOP is an Igor Pro extension.\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "MyXOP is an Igor Pro extension.\0"
+            VALUE "FileVersion", "1, 0, 2, 0\0"
+            VALUE "InternalName", "XOP1\0"
+            VALUE "LegalCopyright", "Copyright 2013\0"
+            VALUE "OriginalFilename", "MyXOP.xop\0"
+            VALUE "ProductName", "Igor Pro MyXOP\0"
+            VALUE "ProductVersion", "6, 2, 0, 0\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE  
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE  
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE  
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/*
+	Define XOP Functions to Export here
+
+*/
+
+#include "XOPResources.h"			// Defines XOP-specific symbols.
+
+1100 STR#					// Custom error messages.
+BEGIN
+	"This XOP requires Igor Pro 6.20 or later.\0",	// REQUIRES_IGOR_620
+	"This XOP doesn't support indirect function calls.\0",
+	// You can add error messages here.
+	
+	0,								// NOTE: 0 required to terminate the resource.
+END
+
+/* no menu item */
+
+1100 XOPI							// XOPI - Describes general XOP properties to IGOR. 
+BEGIN
+	XOP_VERSION,					// Version number of host XOP system.
+	DEV_SYS_CODE,					// Code for development system used to make XOP.
+	0,								// Obsolete - set to zero.
+	0,								// Obsolete - set to zero.
+	XOP_TOOLKIT_VERSION				// XOP Toolkit version.
+END
+
+1100 XOPF							// Describes functions added by XOP to IGOR.
+BEGIN
+	"MyFunc\0",					// Function name.
+	F_UTIL | F_EXTERNAL,			// Function category,
+	NT_FP64,						// Return value type.
+		NT_FP64,					// First parameter type.
+		NT_FP64,					// Second parameter type.
+		0,							// NOTE: 0 required to terminate list of parameter types.
+
+	// More function descriptions can appear here.
+	
+	0,								// NOTE: 0 required to terminate the resource.
+END
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
