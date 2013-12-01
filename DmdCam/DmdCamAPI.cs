@@ -26,13 +26,7 @@ namespace eas_lab.acq.DmdCam
 
         public DmdCamXop() { }
 
-        /// <summary>
-        /// Setup a DmdCamera device
-        /// </summary>
-        /// <param name="screenId">Screen id.  Primary monitor=0, next monitor=1, etc</param>
-        /// <param name="expectedSize">Dimensions of screen we expect.  
-        /// Set to (0,0) to ignore; otherwise a dimension mismatch will cause an error</param>
-        public void DmdCam_Create(int screenId, RectSize expectedSize)
+        Screen validateScreen(int screenId)
         {
             if (screenId == 0)
                 throw new ArgumentException("Screen 0 is reserved for Igor");
@@ -40,17 +34,24 @@ namespace eas_lab.acq.DmdCam
                 throw new ArgumentException("Screen ID too high-- not that many displays are connected");
             if (screenId < 0)
                 throw new ArgumentException("Screen ID must be a positive #");
+            return Screen.AllScreens[screenId];
+        }
 
-            Screen s = Screen.AllScreens[screenId];
-            if ((expectedSize.DimX != 0) || (expectedSize.DimY != 0))
-            {
-                bool ok = (expectedSize.DimX == s.Bounds.Width) && (expectedSize.DimY == s.Bounds.Height);
-                if (!ok)
-                    throw new ArgumentException("Specify the exact dimensions of the screen, or set expectedSize to (0,0) to use defaults. " +
-                        string.Format(" Screen {0} has dimensions {1}x{2}, but you gave expectedSize={3}x{4}", screenId,
-                        s.Bounds.Width, s.Bounds.Height, expectedSize.DimX, expectedSize.DimY));
-            }
+        public void DmdCam_GetSize(int screenId, out RectSize size)
+        {
+            Screen s = validateScreen(screenId);
+            size = new RectSize(s.Bounds.Width, s.Bounds.Height);
+        }
 
+        /// <summary>
+        /// Setup a DmdCamera device
+        /// </summary>
+        /// <param name="screenId">Screen id.  Primary monitor=0, next monitor=1, etc</param>
+        /// <param name="expectedSize">Dimensions of screen we expect.  
+        /// Set to (0,0) to ignore; otherwise a dimension mismatch will cause an error</param>
+        public void DmdCam_Create(int screenId)
+        {
+            Screen s = validateScreen(screenId);
             bool added = cams.TryAdd(screenId, new DmdCam(s.Bounds.Width, s.Bounds.Height, s));
             if (!added)
                 throw new InvalidOperationException("Another DmdCam was already created for this screen!");
@@ -62,13 +63,22 @@ namespace eas_lab.acq.DmdCam
         }
 
         /// <summary>
-        /// Set levels for image.  Stored as flattened 2D array.
+        /// Set levels for image.  Stored as 2D array.
         /// 0 = black (mirror "off"), 1 = white (mirror "on")
         /// </summary>
-        /// <param name="whiteLevels">Flattened 2D array of pixel values</param>
-        public void DmdCam_SetImage(int screenId, double[] whiteLevels)
+        /// <param name="whiteLevels">2D array of pixel values</param>
+        public void DmdCam_SetImage(int screenId, double[,] whiteLevels)
         {
             throw new NotImplementedException();
+            Screen s = validateScreen(screenId);
+
+            int dimX = whiteLevels.GetLength(0);
+            int dimY = whiteLevels.GetLength(1);
+            bool ok = (dimX == s.Bounds.Width) && (dimY == s.Bounds.Height);
+            if (!ok)
+                throw new ArgumentException(string.Format(
+                    " Screen {0} has dimensions {1}x{2}, but you passed in a wave with dimensions ={3}x{4}",
+                    screenId, s.Bounds.Width, s.Bounds.Height, dimX, dimY));
         }
 
         protected override void RunOnceDisposer() 

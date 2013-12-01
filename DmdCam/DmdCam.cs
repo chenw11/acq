@@ -27,6 +27,22 @@ namespace eas_lab.acq.DmdCam
             this.outputScreen = outputScreen;
             if (outputScreen != null)
                 outputWindow = new Window();
+            PreventDisposeOnUserClose(outputWindow);
+            PreventDisposeOnUserClose(previewWindow);
+            ShowOutputScreen();
+        }
+
+        void PreventDisposeOnUserClose(Window w)
+        {
+            if (w != null)
+                w.Closing += (object sender, System.ComponentModel.CancelEventArgs e) =>
+                {
+                    if (!this.IsDisposed)
+                    {
+                        w.Visibility = Visibility.Hidden;
+                        e.Cancel = true;
+                    }
+                };
         }
 
         public void ShowOutputScreen()

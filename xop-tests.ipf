@@ -5,23 +5,80 @@
 //    igor.exe /i /x "Execute/P "LOADFILE C:\\path\\to\\tests.ipf"; Execute/P "COMPILEPROCEDURES"; Execute/P "run_all_tests()""
 
 Function run_all_tests()
-	test_MyFunc()
+	test_DmdCam_Reset()
+	test_DmdCam_GetSize()
+	test_DmdCam_Create()
+	test_DmdCam_Preview()
+	test_DmdCam_SetImage()
 	Execute/P "Quit /N"
 End
 
 
-Function test_MyFunc()
-	Variable input1, input2
-	Variable expected, actual
-	
-	input1 = 6
-	input2 = 7
-	expected = 42
-	actual = MyFunc(input1, input2)
-	Print actual
+Function test_DmdCam_Reset()
+	VARIABLE expected, actual
+	expected = 0
+	actual = DmdCam_Reset()
 	if (expected != actual)
-		Abort "test_MyFunc: Expected != actual"
+		Abort "test_DmdCam_reset() failed"
 	else
 		return 0
 	endif
+End
+
+Structure RectSize
+	uint32 DimX
+	uint32 DimY
+EndStructure
+
+Function test_DmdCam_GetSize()
+	STRUCT RectSize size
+	VARIABLE outputDevice, expected, actual
+
+	outputDevice = 1
+	expected = 0
+	actual = DmdCam_GetSize(outputDevice, size)
+	if (expected != actual)
+		Abort "test_DmdCam_GetDims() failed"
+	else
+		return 0
+	endif
+End
+
+Function test_DmdCam_Create()
+	VARIABLE outputDevice, expected, actual
+	outputDevice = 1
+	expected = 0
+	actual = DmdCam_Create(outputDevice)
+	if (expected != actual)
+		Abort "test_DmdCam_Create() failed"
+	else
+		return 0
+	endif
+End
+
+Function test_DmdCam_Preview()
+	VARIABLE outputDevice, expected, actual
+	outputDevice = 1
+	expected = 0
+
+	actual = DmdCam_Preview(outputDevice, 1)
+	if (expected != actual)
+		Abort "test_DmdCam_Preview() failed"
+	else
+		return 0
+	endif
+
+	actual = DmdCam_Preview(outputDevice, 0)
+	if (expected != actual)
+		Abort "test_DmdCam_Preview() failed"
+	else
+		return 0
+	endif
+End
+
+Function test_DmdCam_SetImage()
+	VARIABLE outputDevice, expected, actual
+	STRUCT RectSize size
+	WAVE image
+	outputDevice = 1
 End

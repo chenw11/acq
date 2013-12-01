@@ -32,3 +32,5 @@
 // returns double given 2 arguments
 #define P2( name, arg1Type, arg2Type ) name, MyFuncCategory, NT_FP64, arg1Type, arg2Type, 0
 
+// returns double given 3 arguments
+#define P3( name, arg1Type, arg2Type, arg3Type ) name, MyFuncCategory, NT_FP64, arg1Type, arg2Type, arg3Type, 0

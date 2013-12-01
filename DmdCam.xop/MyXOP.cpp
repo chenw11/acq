@@ -10,6 +10,7 @@ using namespace eas_lab::acq::DmdCam;
 #define XF eas_lab::acq::DmdCam::DmdCamXopFrame
 #define X (XF::Default)
 
+#pragma pack(2)
 // parameters are listed in reverse order, with result at the end
 // this is the reverse of the resource file format
 typedef struct { double ret; } P0;
@@ -22,8 +23,10 @@ template<typename T1, typename T2> struct P2 {  // parameter order is backwards!
 	double ret; //return value
 } ;
 
+#pragma pack()
+
 // error handling.  h is the error handler.  either catch and return code, or let exceptions bubble up
-#ifdef _DEBUG
+#ifdef NOTREALLY_DEBUG
 	#define DoWith(h,x) { { x }; h 0; }
 #else
 	#define DoWith(h,x) { try {  { x }; h 0; } catch(System::Exception^ e) { h (int)XF::Error(e->Message); } }
@@ -40,7 +43,8 @@ template<typename T1, typename T2> struct P2 {  // parameter order is backwards!
 
 #define P1(name,structType) static int name (P1<structType*>* p) { NotNull(p); ExpectStruct( p->arg1);  Do( X::Xop-> name ( *(p->arg1) ); ); }
 
-#define PID_primitive(name, primType, primCast) static int name (P2<double, primType>* p) { NotNull(p); Do( X-> name ((int)(p-> arg1), p->arg2); ); }
+#define PID_none(name) static int name (P1<double>* p) { NotNull(p); Do ( X -> name ((int)(p->arg1)); ); }
+#define PID_primitive(name, primType, primCast) static int name (P2<double, primType>* p) { NotNull(p); Do( X-> name ((int)(p-> arg1), (primCast)(p->arg2)); ); }
 #define PID_struct(name, structType) static int name (P2<double, structType*>* p) { NotNull(p); ExpectStruct( p-> arg2); Do( X-> name ((int)(p-> arg1), *(p->arg2)); ); }
 
 // EXPORT 0
@@ -51,13 +55,63 @@ static int DmdCam_Reset(P0* p)
 	return 0;
 }
 
-PID_struct( DmdCam_Create, eas_lab::RectSize );  // EXPORT 1: screenId, expectedSize
-
-PID_primitive( DmdCam_Preview, double, bool ); // EXPORT 2: screenId, visibility
-
-static int DmdCam_SetImage(P2<double, waveHndl>* p) // EXPORT 3: screenId, image white levels
+// EXPORT 1: screenId, outSize
+static int DmdCam_GetSize(P2<double, eas_lab::RectSize*>* p)
 {
-	return -1;
+	NotNull(p);
+	ExpectStruct(p->arg2);
+
+	eas_lab::RectSize outSize;
+	int err;
+	DoWith(err=, X->DmdCam_GetSize(p->arg1, outSize); );
+	*(p->arg2) = outSize;
+
+	return err;
+}
+
+
+// EXPORT 2: screenId, expectedSize
+PID_none( DmdCam_Create );  
+
+// EXPORT 3: screenId, visibility
+PID_primitive( DmdCam_Preview, double, bool );
+
+// EXPORT 4: screenId, image white levels
+static int DmdCam_SetImage(P2<double, waveHndl>* p) 
+{
+	NotNull(p);
+	Handle wavH = p->arg2;
+
+	if (wavH == NULL)
+		return(NON_EXISTENT_WAVE);
+
+	if (WaveType(wavH) != NT_FP64)
+		return(REQUIRES_DP_WAVE);
+
+	int numDims = 0;
+	CountInt dimSizes[MAX_DIMENSIONS+1];
+
+	int err;
+	if (err=MDGetWaveDimensions(wavH, &numDims, dimSizes))
+		return err;
+
+	if (numDims != 2)
+		return(INCORRECT_NUM_DIMS);
+
+	int n = WavePoints(wavH);
+	if (n < 1)
+		return(MULTIDIM_FAIL);
+
+	array<double,2>^ whitelevels = gcnew array<double,2>(dimSizes[ROWS], dimSizes[COLUMNS]);
+	pin_ptr<double> pgcar = &whitelevels[0,0];
+
+	err = MDGetDPDataFromNumericWave(wavH, pgcar);
+	if (err != 0)
+		return err;
+
+	int screenId = (int)(p->arg1);
+	DoWith(err=, X->DmdCam_SetImage(screenId, whitelevels);  );
+	return err;
 }
 
 // returns function pointers for each exported function
@@ -70,10 +124,12 @@ static XOPIORecResult RegisterFunction()
 		case 0:	
 			return((XOPIORecResult)DmdCam_Reset);  // This should now be 64-bit safe
 		case 1:
-			return((XOPIORecResult)DmdCam_Create);
+			return((XOPIORecResult)DmdCam_GetSize);
 		case 2:
-			return((XOPIORecResult)DmdCam_Preview);
+			return((XOPIORecResult)DmdCam_Create);
 		case 3:
+			return((XOPIORecResult)DmdCam_Preview);
+		case 4:
 			return((XOPIORecResult)DmdCam_SetImage);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
@@ -89,6 +145,7 @@ static void ReportError(System::String^ msg)
 {
 	array<unsigned char, 1>^ buffer = gcnew array<unsigned char>(msg->Length);
 	System::Text::ASCIIEncoding::ASCII->GetBytes(msg, 0, msg->Length, buffer, 0);
+	buffer[msg->Length-1] = '\0';
 	unsigned char* p = (unsigned char*)malloc(msg->Length);
 	System::Runtime::InteropServices::Marshal::Copy(buffer, 0, (System::IntPtr)p, msg->Length);
 	XOPNotice((char*)p);
