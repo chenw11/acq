@@ -83,9 +83,10 @@
   <ItemGroup>
     <Compile Include="DisplayDeviceViewModel.cs" />
     <Compile Include="DmdCam.cs" />
-    <Compile Include="DmdCamAPI.cs" />
+    <Compile Include="DmdCamXop.cs" />
     <Compile Include="DmdCamXopFrame.cs" />
     <Compile Include="ErrorHandling.cs" />
+    <Compile Include="Misc.cs" />
     <Compile Include="PreviewDisplayView.xaml.cs">
       <DependentUpon>PreviewDisplayView.xaml</DependentUpon>
     </Compile>

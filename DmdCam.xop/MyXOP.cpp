@@ -102,7 +102,7 @@ static int DmdCam_SetImage(P2<double, waveHndl>* p)
 	if (n < 1)
 		return(MULTIDIM_FAIL);
 
-	array<double,2>^ whitelevels = gcnew array<double,2>(dimSizes[ROWS], dimSizes[COLUMNS]);
+	array<double,2>^ whitelevels = gcnew array<double,2>(dimSizes[COLUMNS], dimSizes[ROWS]);
 	pin_ptr<double> pgcar = &whitelevels[0,0];
 
 	err = MDGetDPDataFromNumericWave(wavH, pgcar);
@@ -143,9 +143,9 @@ static XOPIORecResult RegisterFunction()
 */
 static void ReportError(System::String^ msg)
 {
-	array<unsigned char, 1>^ buffer = gcnew array<unsigned char>(msg->Length);
+	array<unsigned char>^ buffer = gcnew array<unsigned char>(msg->Length+1);
 	System::Text::ASCIIEncoding::ASCII->GetBytes(msg, 0, msg->Length, buffer, 0);
-	buffer[msg->Length-1] = '\0';
+	buffer[msg->Length] = '\0';
 	unsigned char* p = (unsigned char*)malloc(msg->Length);
 	System::Runtime::InteropServices::Marshal::Copy(buffer, 0, (System::IntPtr)p, msg->Length);
 	XOPNotice((char*)p);

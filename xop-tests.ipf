@@ -79,6 +79,7 @@ End
 Function test_DmdCam_SetImage()
 	VARIABLE outputDevice, expected, actual
 	STRUCT RectSize size
-	WAVE image
+	Make/O/D/N=(1280,1024) DMDwave=(p<50)*(q<150)
 	outputDevice = 1
+	DmdCam_SetImage(1, DMDwave)
 End

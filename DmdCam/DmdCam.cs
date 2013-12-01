@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace eas_lab.acq.DmdCam
@@ -18,6 +19,12 @@ namespace eas_lab.acq.DmdCam
         public DmdCam(int dim_x, int dim_y, Screen outputScreen)
             : base(dim_x, dim_y)
         {
+            if (outputScreen == null)
+                throw new ArgumentNullException();
+            bool ok = (outputScreen.Bounds.Width == dim_x)
+                && (outputScreen.Bounds.Height == dim_y);
+            if (!ok)
+                throw new ArgumentException("Dimension mismatch");
             this.viewModel = new DisplayDeviceViewModel(dim_x, dim_y);
             previewDisplayView = new PreviewDisplayView();
             previewDisplayView.DataContext = this.viewModel;
@@ -25,8 +32,7 @@ namespace eas_lab.acq.DmdCam
             previewWindow.Content = previewDisplayView;
 
             this.outputScreen = outputScreen;
-            if (outputScreen != null)
-                outputWindow = new Window();
+            outputWindow = new Window();
             PreventDisposeOnUserClose(outputWindow);
             PreventDisposeOnUserClose(previewWindow);
             ShowOutputScreen();
@@ -45,7 +51,7 @@ namespace eas_lab.acq.DmdCam
                 };
         }
 
-        public void ShowOutputScreen()
+        void ShowOutputScreen()
         {
             if (outputScreen != null)
             {
@@ -77,6 +83,10 @@ namespace eas_lab.acq.DmdCam
                 previewWindow.Hide();
         }
 
+        public void SetImage(double[,] whiteLevels)
+        {
+            viewModel.SetImage(whiteLevels);
+        }
 
         protected override void RunOnceDisposer()
         {

@@ -1,25 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
 
 namespace eas_lab.acq.DmdCam
 {
-    public interface IDisplayDevice : IDisposable
-    {
-        int Dim_X { get; }
-        int Dim_Y { get; }
-
-        BitmapSource ImageSource { get; set; }
-    }
-
-    public static class Constants
-    {
-        public const int DLP_3000_DIM_X = 608;
-        public const int DLP_3000_DIM_Y = 684;
-    }
-
-
     public class DmdCamXop : Disposable
     {
         readonly ConcurrentDictionary<int, DmdCam> cams = new ConcurrentDictionary<int, DmdCam>();
@@ -69,16 +53,8 @@ namespace eas_lab.acq.DmdCam
         /// <param name="whiteLevels">2D array of pixel values</param>
         public void DmdCam_SetImage(int screenId, double[,] whiteLevels)
         {
-            throw new NotImplementedException();
             Screen s = validateScreen(screenId);
-
-            int dimX = whiteLevels.GetLength(0);
-            int dimY = whiteLevels.GetLength(1);
-            bool ok = (dimX == s.Bounds.Width) && (dimY == s.Bounds.Height);
-            if (!ok)
-                throw new ArgumentException(string.Format(
-                    " Screen {0} has dimensions {1}x{2}, but you passed in a wave with dimensions ={3}x{4}",
-                    screenId, s.Bounds.Width, s.Bounds.Height, dimX, dimY));
+            cams[screenId].SetImage(whiteLevels);
         }
 
         protected override void RunOnceDisposer() 
