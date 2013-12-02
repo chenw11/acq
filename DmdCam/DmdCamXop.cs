@@ -41,11 +41,6 @@ namespace eas_lab.acq.DmdCam
                 throw new InvalidOperationException("Another DmdCam was already created for this screen!");
         }
 
-        public void DmdCam_Preview(int screenId, bool visibility)
-        {
-            cams[screenId].SetPreviewVisibility(visibility, modal: false);
-        }
-
         /// <summary>
         /// Set levels for image.  Stored as 2D array.
         /// 0 = black (mirror "off"), 1 = white (mirror "on")

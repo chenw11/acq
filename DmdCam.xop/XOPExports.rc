@@ -138,8 +138,7 @@ BEGIN
 	P0("DmdCam_Reset\0"),						// EXPORT 0
 	P2("DmdCam_GetSize\0", TDbl, TStruct),		// EXPORT 1: screenId, outSize
 	P2("DmdCam_Create\0", TDbl),				// EXPORT 2: screenId
-	P2("DmdCam_Preview\0", TDbl, TDbl),			// EXPORT 3: screenId, visibility
-	P2("DmdCam_SetImage\0", TDbl, TWave),		// EXPORT 4: screenId, image white levels
+	P2("DmdCam_SetImage\0", TDbl, TWave),		// EXPORT 3: screenId, image white levels
 	// More function descriptions can appear here.
 	
 	0,								// NOTE: 0 required to terminate the resource.

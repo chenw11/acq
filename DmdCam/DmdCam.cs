@@ -12,7 +12,6 @@ namespace eas_lab.acq.DmdCam
     {
         readonly DisplayDeviceViewModel viewModel;
         readonly PreviewDisplayView previewDisplayView;
-        readonly Window previewWindow;
         readonly Window outputWindow;
         readonly Screen outputScreen;
 
@@ -28,13 +27,10 @@ namespace eas_lab.acq.DmdCam
             this.viewModel = new DisplayDeviceViewModel(dim_x, dim_y);
             previewDisplayView = new PreviewDisplayView();
             previewDisplayView.DataContext = this.viewModel;
-            previewWindow = new Window();
-            previewWindow.Content = previewDisplayView;
 
             this.outputScreen = outputScreen;
             outputWindow = new Window();
             PreventDisposeOnUserClose(outputWindow);
-            PreventDisposeOnUserClose(previewWindow);
             ShowOutputScreen();
         }
 
@@ -70,19 +66,6 @@ namespace eas_lab.acq.DmdCam
             }
         }
 
-        public void SetPreviewVisibility(bool visibility, bool modal)
-        {
-            if (visibility)
-            {
-                if (modal)
-                    previewWindow.ShowDialog();
-                else
-                    previewWindow.Show();
-            }
-            else
-                previewWindow.Hide();
-        }
-
         public void SetImage(double[,] whiteLevels)
         {
             viewModel.SetImage(whiteLevels);
@@ -90,8 +73,6 @@ namespace eas_lab.acq.DmdCam
 
         protected override void RunOnceDisposer()
         {
-            if (previewWindow != null)
-                previewWindow.Close();
             if (outputWindow != null)
                 outputWindow.Close();
         }

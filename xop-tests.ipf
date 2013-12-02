@@ -8,7 +8,6 @@ Function run_all_tests()
 	test_DmdCam_Reset()
 	test_DmdCam_GetSize()
 	test_DmdCam_Create()
-	test_DmdCam_Preview()
 	test_DmdCam_SetImage()
 	Execute/P "Quit /N"
 End
@@ -56,30 +55,9 @@ Function test_DmdCam_Create()
 	endif
 End
 
-Function test_DmdCam_Preview()
-	VARIABLE outputDevice, expected, actual
-	outputDevice = 1
-	expected = 0
-
-	actual = DmdCam_Preview(outputDevice, 1)
-	if (expected != actual)
-		Abort "test_DmdCam_Preview() failed"
-	else
-		return 0
-	endif
-
-	actual = DmdCam_Preview(outputDevice, 0)
-	if (expected != actual)
-		Abort "test_DmdCam_Preview() failed"
-	else
-		return 0
-	endif
-End
-
 Function test_DmdCam_SetImage()
 	VARIABLE outputDevice, expected, actual
-	STRUCT RectSize size
 	Make/O/D/N=(1280,1024) DMDwave=(p<50)*(q<150)
 	outputDevice = 1
-	DmdCam_SetImage(1, DMDwave)
+	DmdCam_SetImage(outputDevice, DMDwave)
 End

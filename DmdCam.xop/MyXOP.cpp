@@ -73,10 +73,7 @@ static int DmdCam_GetSize(P2<double, eas_lab::RectSize*>* p)
 // EXPORT 2: screenId, expectedSize
 PID_none( DmdCam_Create );  
 
-// EXPORT 3: screenId, visibility
-PID_primitive( DmdCam_Preview, double, bool );
-
-// EXPORT 4: screenId, image white levels
+// EXPORT 3: screenId, image white levels
 static int DmdCam_SetImage(P2<double, waveHndl>* p) 
 {
 	NotNull(p);
@@ -128,8 +125,6 @@ static XOPIORecResult RegisterFunction()
 		case 2:
 			return((XOPIORecResult)DmdCam_Create);
 		case 3:
-			return((XOPIORecResult)DmdCam_Preview);
-		case 4:
 			return((XOPIORecResult)DmdCam_SetImage);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
