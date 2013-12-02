@@ -23,6 +23,13 @@ template<typename T1, typename T2> struct P2 {  // parameter order is backwards!
 	double ret; //return value
 } ;
 
+template<typename T1, typename T2, typename T3> struct P3 {
+	T3 arg3;  // 3rd param
+	T2 arg2;  // 2nd param
+	T1 arg1;  // 1st param
+	double ret; //return value
+} ;
+
 #pragma pack()
 
 // error handling.  h is the error handler.  either catch and return code, or let exceptions bubble up
@@ -36,16 +43,6 @@ template<typename T1, typename T2> struct P2 {  // parameter order is backwards!
 
 #define NotNull( p ) { if ( (p) == NULL ) { return(ERROR_NULL_POINTER); } p->ret = 0; }
 #define ExpectStruct( a ) { if ( (a) == NULL ) { return(EXPECT_STRUCT); } }
-
-
-#define P0(name) static int name (P0* p) { NotNull(p); Do( X::Xop-> name (); ) }
-#define P0R(name) static int name (P0* p) { NotNull(p); Do( p->ret = X::Xop-> name (); ) }
-
-#define P1(name,structType) static int name (P1<structType*>* p) { NotNull(p); ExpectStruct( p->arg1);  Do( X::Xop-> name ( *(p->arg1) ); ); }
-
-#define PID_none(name) static int name (P1<double>* p) { NotNull(p); Do ( X -> name ((int)(p->arg1)); ); }
-#define PID_primitive(name, primType, primCast) static int name (P2<double, primType>* p) { NotNull(p); Do( X-> name ((int)(p-> arg1), (primCast)(p->arg2)); ); }
-#define PID_struct(name, structType) static int name (P2<double, structType*>* p) { NotNull(p); ExpectStruct( p-> arg2); Do( X-> name ((int)(p-> arg1), *(p->arg2)); ); }
 
 // EXPORT 0
 static int DmdCam_Reset(P0* p)
@@ -71,7 +68,11 @@ static int DmdCam_GetSize(P2<double, eas_lab::RectSize*>* p)
 
 
 // EXPORT 2: screenId, expectedSize
-PID_none( DmdCam_Create );  
+static int DmdCam_Create(P1<double>* p) 
+{
+	NotNull(p);
+	Do ( X->DmdCam_Create( (int)(p->arg1) ); );
+}
 
 // EXPORT 3: screenId, image white levels
 static int DmdCam_SetImage(P2<double, waveHndl>* p) 
@@ -111,6 +112,47 @@ static int DmdCam_SetImage(P2<double, waveHndl>* p)
 	return err;
 }
 
+
+// EXPORT 4: screenId, deviceName, wavelength
+static int DmdCam_ConfigPowerMeter(P3<double, Handle, double>* p)
+{
+	NotNull(p);
+	if (p->arg2 == NULL)
+		return(ERROR_NULL_POINTER);
+
+	int err;
+	int slen = GetHandleSize(p->arg2);
+	if (slen < 2)
+	{
+		err = BAD_NAME;
+		goto done;
+	}
+
+	char* devName = (char*)malloc(slen + 2);
+	err = GetCStringFromHandle(p->arg2, devName, slen);
+	if (err != 0)
+		goto done;
+
+	devName[slen] = '\0';
+	System::String^ gcdevName = gcnew System::String(devName);
+	DoWith(err=,  X->DmdCam_ConfigPowerMeter((int)(p->arg1), gcdevName, p->arg3); );
+
+	// goto is bad, but this is copied from example code on Page 143 of XOPMan6.pdf
+done:
+	// Unlike wave handles, string handles must be disposed by the XOP function
+	if (p->arg1 != NULL)
+		DisposeHandle(p->arg2);
+	return err;
+}
+
+
+// EXPORT 5: screenId
+static int DmdCam_MeasurePower(P1<double>* p) 
+{
+	NotNull(p);
+	Do ( p->ret = X->DmdCam_MeasurePower(p->arg1); );
+}
+
 // returns function pointers for each exported function
 static XOPIORecResult RegisterFunction()
 {
@@ -126,6 +168,10 @@ static XOPIORecResult RegisterFunction()
 			return((XOPIORecResult)DmdCam_Create);
 		case 3:
 			return((XOPIORecResult)DmdCam_SetImage);
+		case 4:
+			return((XOPIORecResult)DmdCam_ConfigPowerMeter);
+		case 5:
+			return((XOPIORecResult)DmdCam_MeasurePower);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
 	}
@@ -138,11 +184,11 @@ static XOPIORecResult RegisterFunction()
 */
 static void ReportError(System::String^ msg)
 {
-	array<unsigned char>^ buffer = gcnew array<unsigned char>(msg->Length+1);
+	array<unsigned char>^ buffer = gcnew array<unsigned char>(msg->Length);
 	System::Text::ASCIIEncoding::ASCII->GetBytes(msg, 0, msg->Length, buffer, 0);
-	buffer[msg->Length] = '\0';
-	unsigned char* p = (unsigned char*)malloc(msg->Length);
+	unsigned char* p = (unsigned char*)malloc(msg->Length+2);
 	System::Runtime::InteropServices::Marshal::Copy(buffer, 0, (System::IntPtr)p, msg->Length);
+	p[msg->Length] = '\0';
 	XOPNotice((char*)p);
 	free(p);
 }

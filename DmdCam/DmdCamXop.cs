@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace eas_lab.acq.DmdCam
@@ -50,7 +51,25 @@ namespace eas_lab.acq.DmdCam
         {
             Screen s = validateScreen(screenId);
             cams[screenId].SetImage(whiteLevels);
+
         }
+
+        /// <summary>
+        /// Configure a power meter
+        /// </summary>
+        public void DmdCam_ConfigPowerMeter(int screenId, string deviceName, double wavelength)
+        {
+            cams[screenId].ConfigurePowerMeter(deviceName, wavelength);
+        }
+
+        /// <summary>
+        /// Read the power from the power meter
+        /// </summary>
+        public double DmdCam_MeasurePower(int screenId)
+        {
+            return cams[screenId].MeasurePower();
+        }
+
 
         protected override void RunOnceDisposer() 
         {

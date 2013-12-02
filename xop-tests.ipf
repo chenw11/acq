@@ -9,7 +9,7 @@ Function run_all_tests()
 	test_DmdCam_GetSize()
 	test_DmdCam_Create()
 	test_DmdCam_SetImage()
-	Execute/P "Quit /N"
+	//Execute/P "Quit /N"
 End
 
 

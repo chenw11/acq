@@ -137,8 +137,10 @@ END
 BEGIN
 	P0("DmdCam_Reset\0"),						// EXPORT 0
 	P2("DmdCam_GetSize\0", TDbl, TStruct),		// EXPORT 1: screenId, outSize
-	P2("DmdCam_Create\0", TDbl),				// EXPORT 2: screenId
+	P1("DmdCam_Create\0", TDbl),				// EXPORT 2: screenId
 	P2("DmdCam_SetImage\0", TDbl, TWave),		// EXPORT 3: screenId, image white levels
+	P3("DmdCam_ConfigPowerMeter\0", TDbl, TString, TDbl), // EXPORT 4: screenId, devicename, wavelength
+	P1("DmdCam_MeasurePower\0", TDbl),			// EXPORT 5: screenId
 	// More function descriptions can appear here.
 	
 	0,								// NOTE: 0 required to terminate the resource.
