@@ -113,14 +113,6 @@
     <ResourceCompile Include="XOPExports.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{80dc2326-8d00-478d-806d-f076ef7d3aa8}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
     <ProjectReference Include="..\DmdCam\DmdCam.csproj">
       <Project>{bb10df8f-6a0e-4ae4-93f3-d6653d439c10}</Project>
       <Private>true</Private>
@@ -128,6 +120,9 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\Lab.Core\lab.core.csproj">
+      <Project>{9d94b3aa-bffb-4ee9-8ab3-a1909ff21bf9}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

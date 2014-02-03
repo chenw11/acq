@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
-using eas_lab.gui;
+//using eas_lab.gui;
+using Lab.gui;
 
 namespace eas_lab.acq.DmdCam
 {

@@ -53,12 +53,12 @@ static int DmdCam_Reset(P0* p)
 }
 
 // EXPORT 1: screenId, outSize
-static int DmdCam_GetSize(P2<double, eas_lab::RectSize*>* p)
+static int DmdCam_GetSize(P2<double, Lab::Acq::RectSize*>* p)
 {
 	NotNull(p);
 	ExpectStruct(p->arg2);
 
-	eas_lab::RectSize outSize;
+	Lab::Acq::RectSize outSize;
 	int err;
 	DoWith(err=, X->DmdCam_GetSize(p->arg1, outSize); );
 	*(p->arg2) = outSize;

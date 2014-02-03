@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab;
+using System;
 
 namespace eas_lab.acq.DmdCam
 {

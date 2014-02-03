@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab.Acq;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows.Forms;
