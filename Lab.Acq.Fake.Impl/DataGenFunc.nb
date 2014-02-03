@@ -1,0 +1,1321 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     75502,       1312]
+NotebookOptionsPosition[     74836,       1285]
+NotebookOutlinePosition[     75177,       1300]
+CellTagsIndexPosition[     75134,       1297]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.571012027020048*^9, 3.5710120284100504`*^9}, {
+  3.5710121087561665`*^9, 3.5710121093361673`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", "[", 
+   RowBox[{"x_", ",", "y_", ",", "t_", ",", "xm_", ",", "ym_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"x", "-", 
+         RowBox[{"xm", "/", "2"}]}], ")"}], "/", "xm"}], "*", "2", "Pi", " ", 
+      RowBox[{"Cos", "[", "t", "]"}]}], "]"}], "/", "16"}], "+", 
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"y", "-", 
+         RowBox[{"ym", "/", "2"}]}], ")"}], "/", "ym"}], "*", "2", "Pi", " ", 
+      RowBox[{"Sin", "[", "t", "]"}]}], "]"}], "/", "16"}], "+", "0.125", "+", 
+   RowBox[{"7", "*", 
+    RowBox[{
+     RowBox[{"Exp", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{"x", "-", 
+            RowBox[{"xm", "/", "2"}]}], ")"}], "2"]}], "/", "100"}], "-", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"y", "-", 
+           RowBox[{"ym", "/", "2"}]}], ")"}], "2"], "/", "100"}]}], "]"}], 
+     "/", "8"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.571012879888255*^9, 3.5710128867782645`*^9}, {
+   3.5710129227683153`*^9, 3.5710129232183156`*^9}, {3.5710132655468254`*^9, 
+   3.5710132684268293`*^9}, 3.5710133088468857`*^9, {3.571013360318959*^9, 
+   3.5710133713689747`*^9}, {3.571013481380129*^9, 3.5710135569202347`*^9}, {
+   3.571013708280446*^9, 3.5710137118904514`*^9}, {3.571013774090539*^9, 
+   3.571013805830583*^9}, {3.5710138362406254`*^9, 3.5710138368106265`*^9}, {
+   3.5710138722706757`*^9, 3.5710138996907144`*^9}, {3.571014138631049*^9, 
+   3.571014140131051*^9}, {3.571014501202284*^9, 3.5710145019666853`*^9}, {
+   3.571014839972479*^9, 3.57101484040928*^9}, {3.571077696371585*^9, 
+   3.571077698805189*^9}, {3.5710779081575565`*^9, 3.571077929045994*^9}, {
+   3.5710780473722014`*^9, 3.5710781043747015`*^9}, {3.5710781701444173`*^9, 
+   3.571078213512493*^9}, {3.571078306722657*^9, 3.5710783098738623`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"values", "[", 
+    RowBox[{"t_", ",", "xm_", ",", "ym_"}], "]"}], ":=", 
+   RowBox[{"ParallelTable", "[", 
+    RowBox[{
+     RowBox[{"f", "[", 
+      RowBox[{"x", ",", "y", ",", "t", ",", "xm", ",", "ym"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", "xm"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", "0", ",", "ym"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ranges", "[", 
+    RowBox[{"t_", ",", "xm_", ",", "ym_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"v", ",", "m", ",", "M"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"v", "=", 
+       RowBox[{"values", "[", 
+        RowBox[{"t", ",", "xm", ",", "ym"}], "]"}]}], ";", 
+      RowBox[{"m", "=", 
+       RowBox[{"Parallelize", "[", 
+        RowBox[{"Min", "[", "v", "]"}], "]"}]}], ";", 
+      RowBox[{"M", "=", 
+       RowBox[{"Parallelize", "[", 
+        RowBox[{"Max", "[", "v", "]"}], "]"}]}], ";", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"t", ",", "m"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"t", ",", "M"}], "}"}]}], "}"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.5710139197407427`*^9, 3.571014070120953*^9}, {
+  3.5710141047810016`*^9, 3.5710141195110226`*^9}, {3.571014152883872*^9, 
+  3.5710143397878003`*^9}, {3.5710777798473315`*^9, 3.571077788349346*^9}, {
+  3.5710782407969413`*^9, 3.571078264321782*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Histogram", "[", 
+  RowBox[{"values", "[", 
+   RowBox[{"1", ",", "64", ",", "128"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.571078272527397*^9, 3.571078275865803*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  {RGBColor[0.798413061722744, 0.824719615472648, 0.968322270542458], 
+   EdgeForm[Opacity[0.7]], {{}, 
+    {RGBColor[0.24720000000000014`, 0.24, 0.6], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 16.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 24.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 21.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.4428931686004542], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 17.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 7.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 26.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 19.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.5470136627990908, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 17.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 7.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 26.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 19.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.33692049419863584`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 17.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 7.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 26.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 19.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.3531726744018182, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 16.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 25.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 20.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.5632658430022722], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 16.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 24.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 21.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.42664098839727194`, 0.24], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], RectangleBox[{0., 0.}, {0.02, 39.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 16.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 12.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 25.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 21.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.2634521802031821, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 37.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 18.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 11.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 24.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 23.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.47354534880363613`, 0.6], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], RectangleBox[{0., 0.}, {0.02, 37.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 17.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 12.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 22.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 25.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.5163614825959097, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 35.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 19.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 10.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 23.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 26.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.3062683139954558, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 35.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 18.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 9.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 7.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 11.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 22.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 27.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.3838248546049982, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 33.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 20.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 8.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 9.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 22.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 29.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.5939180232054561, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 31.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 20.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 9.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 22.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 31.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.39598880819409377`, 0.24, 0.6], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], RectangleBox[{0., 0.}, {0.02, 29.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 20.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 11.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 20.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 33.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.2941043604063603], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 25.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 24.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 10.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 18.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 36.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.5041975290068142, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 23.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 24.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 11.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 16.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 39.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.48570930239273163`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], RectangleBox[{0., 0.}, {0.02, 19.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 26.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 12.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 15.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 34.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 7.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.2756161337922776, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], RectangleBox[{0., 0.}, {0.02, 13.},
+      RoundingRadius->0], RectangleBox[{0.02, 0.}, {0.04, 30.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 13.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 14.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 28.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 15.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.4144770348081764], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 39.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 16.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 13.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 25.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 20.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.5754297965913696, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 37.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 17.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 12.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 22.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 25.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.36533662799091565`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 33.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 20.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 8.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 11.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 20.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 29.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.32475654060953846`, 0.6], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 31.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 20.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 9.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 22.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 31.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.5348497092099924], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 27.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 22.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 10.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 19.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 35.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.45505712218955346`, 0.24], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 21.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 26.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 11.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 16.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 39.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.24496395358909184`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 15.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 28.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 14.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 15.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 30.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 11.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.4451292150113622, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, RectangleBox[{0.02, 0.}, {0.04, 3.},
+      RoundingRadius->0], RectangleBox[{0.04, 0.}, {0.06, 37.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 16.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 7.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 13.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 26.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 19.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.5447776163881838, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, RectangleBox[{0.04, 0.}, {0.06, 37.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 17.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 12.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 22.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 25.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.3346844477877375, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, RectangleBox[{0.04, 0.}, {0.06, 33.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 20.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 8.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 9.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 22.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 29.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.35540872081272423`, 0.6, 0.24], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, RectangleBox[{0.04, 0.}, {0.06, 29.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 22.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 9.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 20.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 33.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.5655018894131706, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, RectangleBox[{0.04, 0.}, {0.06, 23.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 24.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 12.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 7.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 18.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 37.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.42440494198636775`, 0.24, 0.6], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, RectangleBox[{0.04, 0.}, {0.06, 17.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 27.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 13.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 15.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 32.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 9.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.26568822661407865`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, RectangleBox[{0.04, 0.}, {0.06, 7.},
+      RoundingRadius->0], RectangleBox[{0.06, 0.}, {0.08, 34.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 15.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 12.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 28.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 17.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.4757813952145403, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, RectangleBox[{0.06, 0.}, {0.08, 37.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 18.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 7.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 12.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 23.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 24.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.514125436184998], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, RectangleBox[{0.06, 0.}, {0.08, 33.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 20.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 8.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 9.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 22.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 29.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.3040322675845516, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, RectangleBox[{0.06, 0.}, {0.08, 29.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 22.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 9.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 20.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 33.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.3860609010159101], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, RectangleBox[{0.06, 0.}, {0.08, 25.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 22.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 12.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 7.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 9.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 17.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 37.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.5961540696163564, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, RectangleBox[{0.06, 0.}, {0.08, 19.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 26.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 12.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 15.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 34.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 7.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.39375276178318186`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, {}, RectangleBox[{0.06, 0.}, {0.08, 9.},
+      RoundingRadius->0], RectangleBox[{0.08, 0.}, {0.1, 32.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 15.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 13.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 27.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 17.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.2963404068172645, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 37.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 18.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 8.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 11.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 24.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 23.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.5064335754177262], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 34.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 19.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 9.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 7.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 10.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 22.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 28.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.48347325598182744`, 0.24], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 31.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 20.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 9.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 20.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 33.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.2733800873813658], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 26.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 23.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 10.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 17.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 37.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.4167130812190805, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 21.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 24.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 13.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 13.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 42.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.5731937501804577, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 15.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 28.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 14.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 10.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 33.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 13.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.36310058158001146`, 0.24], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, {}, {}, RectangleBox[{0.08, 0.}, {0.1, 5.},
+      RoundingRadius->0], RectangleBox[{0.1, 0.}, {0.12, 36.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 15.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 28.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 21.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.32699258702045025`, 0.6, 0.24], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 37.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 18.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 7.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 9.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 13.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 37.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.5370857556208966, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 35.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 19.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 7.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 9.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 11.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 40.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.4528210757786416, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 31.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 22.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 8.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 10.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 33.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 9.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24272790717818, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 29.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 22.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 9.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 10.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 30.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 6.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 7.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.4473652614222664, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 25.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 24.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 10.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 10.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 29.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 5.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 7.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.5425415699772719], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 23.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 24.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 11.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 28.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 6.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 3.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 4.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.3324484013768256, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 19.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 26.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 12.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 18.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 15.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 2.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 2.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 4.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.35764476722363614`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 15.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 28.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 14.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 14.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 18.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 2.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], RectangleBox[{0.38, 0.}, {0.4, 2.},
+      RoundingRadius->0], RectangleBox[{0.4, 0.}, {0.42, 4.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, \
+{}}, {{}, 
+    {RGBColor[0.5677379358240978, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 11.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 30.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 15.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 13.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], RectangleBox[{0.38, 0.}, {0.4, 1.},
+      RoundingRadius->0], RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], RectangleBox[{0.44, 0.}, {0.46, 2.},
+      RoundingRadius->0], RectangleBox[{0.46, 0.}, {0.48, 3.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.42216889557547116`], Opacity[0.5], EdgeForm[
+     Opacity[0.7]], {}, {}, {}, {}, {}, RectangleBox[{0.1, 0.}, {0.12, 1.},
+      RoundingRadius->0], RectangleBox[{0.12, 0.}, {0.14, 38.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 17.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 7.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 13.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], RectangleBox[{0.38, 0.}, {0.4, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], RectangleBox[{0.44, 0.}, {0.46, 1.},
+      RoundingRadius->0], RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], RectangleBox[{0.48, 0.}, {0.5, 1.},
+      RoundingRadius->0], RectangleBox[{0.5, 0.}, {0.52, 1.},
+      RoundingRadius->0], RectangleBox[{0.52, 0.}, {0.54, 3.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.2679242730249905, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 39.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 16.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 12.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], RectangleBox[{0.48, 0.}, {0.5, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.52, 0.}, {0.54, 1.},
+      RoundingRadius->0], RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], RectangleBox[{0.56, 0.}, {0.58, 1.},
+      RoundingRadius->0], RectangleBox[{0.58, 0.}, {0.6, 1.},
+      RoundingRadius->0], RectangleBox[{0.6, 0.}, {0.62, 2.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.4780174416254521], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 37.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 18.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 7.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 12.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 1.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.5, 0.}, {0.52, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.58, 0.}, {0.6, 1.},
+      RoundingRadius->0], RectangleBox[{0.6, 0.}, {0.62, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.64, 0.}, {0.66, 1.},
+      RoundingRadius->0], RectangleBox[{0.66, 0.}, {0.68, 3.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.511889389774086, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 37.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 17.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], RectangleBox[{0.38, 0.}, {0.4, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.5, 0.}, {0.52, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.6, 0.}, {0.62, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.64, 0.}, {0.66, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.68, 0.}, {0.7, 1.},
+      RoundingRadius->0], RectangleBox[{0.7, 0.}, {0.72, 1.},
+      RoundingRadius->0], RectangleBox[{0.72, 0.}, {0.74, 1.},
+      RoundingRadius->0], RectangleBox[{0.74, 0.}, {0.76, 2.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.6, 0.3017962211736552], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 19.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 8.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 20.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 1.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.38, 0.}, {0.4, 1.},
+      RoundingRadius->0], RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.5, 0.}, {0.52, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.6, 0.}, {0.62, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.64, 0.}, {0.66, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.7, 0.}, {0.72, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.74, 0.}, {0.76, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.78, 0.}, {0.8, 1.},
+      RoundingRadius->0], RectangleBox[{0.8, 0.}, {0.82, 1.},
+      RoundingRadius->0], RectangleBox[{0.82, 0.}, {0.84, 2.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.3882969474268066, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 19.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 8.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 20.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.44, 0.}, {0.46, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.48, 0.}, {0.5, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.52, 0.}, {0.54, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.58, 0.}, {0.6, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.64, 0.}, {0.66, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.7, 0.}, {0.72, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.74, 0.}, {0.76, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.8, 0.}, {0.82, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.84, 0.}, {0.86, 1.},
+      RoundingRadius->0], RectangleBox[{0.86, 0.}, {0.88, 1.},
+      RoundingRadius->0], RectangleBox[{0.88, 0.}, {0.9, 2.},
+      RoundingRadius->
+       0], {}, {}, {}, {}, {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.24, 0.5983901160272683], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 19.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 7.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 1.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.5, 0.}, {0.52, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.56, 0.}, {0.58, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.62, 0.}, {0.64, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.68, 0.}, {0.7, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.74, 0.}, {0.76, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.8, 0.}, {0.82, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.86, 0.}, {0.88, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.9, 0.}, {0.92, 1.},
+      RoundingRadius->0], RectangleBox[{0.92, 0.}, {0.94, 1.},
+      RoundingRadius->0], RectangleBox[{0.94, 0.}, {0.96, 1.},
+      RoundingRadius->0], RectangleBox[{0.96, 0.}, {0.98, 1.},
+      RoundingRadius->0], {}, {}, {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.6, 0.39151671537227, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 18.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 9.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 7.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 1.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], RectangleBox[{0.34, 0.}, {0.36, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.38, 0.}, {0.4, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.46, 0.}, {0.48, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.52, 0.}, {0.54, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.58, 0.}, {0.6, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.64, 0.}, {0.66, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.72, 0.}, {0.74, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.78, 0.}, {0.8, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.84, 0.}, {0.86, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.9, 0.}, {0.92, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.94, 0.}, {0.96, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.98, 0.}, {1., 1.},
+      RoundingRadius->0], RectangleBox[{1., 0.}, {1.02, 2.},
+      RoundingRadius->0], {}, {}, {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.298576453228161, 0.6, 0.24], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 18.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 9.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 7.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 3.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 1.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], RectangleBox[{0.38, 0.}, {0.4, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.42, 0.}, {0.44, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.48, 0.}, {0.5, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.6, 0.}, {0.62, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.66, 0.}, {0.68, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.74, 0.}, {0.76, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.8, 0.}, {0.82, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.88, 0.}, {0.9, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.94, 0.}, {0.96, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.98, 0.}, {1., 1.},
+      RoundingRadius->0], {}, RectangleBox[{1.02, 0.}, {1.04, 1.},
+      RoundingRadius->0], RectangleBox[{1.04, 0.}, {1.06, 2.},
+      RoundingRadius->0], {}, {}}, {}, {}}, {{}, 
+    {RGBColor[0.24, 0.5086696218286226, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 19.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 7.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 9.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.44, 0.}, {0.46, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.48, 0.}, {0.5, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.62, 0.}, {0.64, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.68, 0.}, {0.7, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.76, 0.}, {0.78, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.82, 0.}, {0.84, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.9, 0.}, {0.92, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.96, 0.}, {0.98, 1.},
+      RoundingRadius->0], {}, RectangleBox[{1., 0.}, {1.02, 1.},
+      RoundingRadius->0], {}, RectangleBox[{1.04, 0.}, {1.06, 1.},
+      RoundingRadius->0], RectangleBox[{1.06, 0.}, {1.08, 1.},
+      RoundingRadius->0], RectangleBox[{1.08, 0.}, {1.1, 1.},
+      RoundingRadius->0]}, {}, {}}, {{}, 
+    {RGBColor[0.4812372095709156, 0.24, 0.6], Opacity[0.5], EdgeForm[Opacity[
+     0.7]], {}, {}, {}, {}, {}, {}, RectangleBox[{0.12, 0.}, {0.14, 35.},
+      RoundingRadius->0], RectangleBox[{0.14, 0.}, {0.16, 19.},
+      RoundingRadius->0], RectangleBox[{0.16, 0.}, {0.18, 8.},
+      RoundingRadius->0], RectangleBox[{0.18, 0.}, {0.2, 8.},
+      RoundingRadius->0], RectangleBox[{0.2, 0.}, {0.22, 8.},
+      RoundingRadius->0], RectangleBox[{0.22, 0.}, {0.24, 11.},
+      RoundingRadius->0], RectangleBox[{0.24, 0.}, {0.26, 19.},
+      RoundingRadius->0], RectangleBox[{0.26, 0.}, {0.28, 2.},
+      RoundingRadius->0], RectangleBox[{0.28, 0.}, {0.3, 2.},
+      RoundingRadius->0], RectangleBox[{0.3, 0.}, {0.32, 1.},
+      RoundingRadius->0], RectangleBox[{0.32, 0.}, {0.34, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.36, 0.}, {0.38, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.4, 0.}, {0.42, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.44, 0.}, {0.46, 1.},
+      RoundingRadius->0], {}, RectangleBox[{0.48, 0.}, {0.5, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.54, 0.}, {0.56, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.62, 0.}, {0.64, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.68, 0.}, {0.7, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.76, 0.}, {0.78, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.82, 0.}, {0.84, 1.},
+      RoundingRadius->0], {}, {}, {}, RectangleBox[{0.9, 0.}, {0.92, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{0.96, 0.}, {0.98, 1.},
+      RoundingRadius->0], {}, {}, RectangleBox[{1.02, 0.}, {1.04, 1.},
+      RoundingRadius->0], {}, RectangleBox[{1.06, 0.}, {1.08, 1.},
+      RoundingRadius->0], RectangleBox[{1.08, 0.}, {1.1, 2.},
+      RoundingRadius->0]}, {}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesOrigin->{0., 0},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  PlotRange->{{0., 1.1}, {All, All}},
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.1]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.5710778042769747`*^9, 3.5710779460500236`*^9, 
+  3.571078068900239*^9, 3.5710781125647163`*^9, 3.571078282246214*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"Transpose", "[", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"ranges", "[", "t", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "10", ",", "0.1"}], "}"}]}], "]"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.571014341488203*^9, 3.571014341815804*^9}, {
+  3.5710143945438967`*^9, 3.571014458239808*^9}, {3.571014524337125*^9, 
+  3.5710145254603267`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {Hue[0.67, 0.6, 0.6], PointBox[CompressedData["
+1:eJw10gswnFcUB/BdVrKEZZdlvda3u5ENVeKV7LbGPeNZ0pVhParCpBGPyjYR
+MXmMppI2pFJFFVORpoNqTOKRSisbJUHsDI0gZboboVa9IsjIIJGiGs3xn/nm
+zp3vnN/55rtXcPBoWIIOjUZLeP1srJuh/2VEcZnz5FLpRm4T7VuH2U6sP3Df
+RcQwLwkRexMP9430ExGfviS/aIvvH5ELv1oat2eFkzealgSujT5Z1QRg/RhZ
+jvzY7OhiLElK3MgkqX/gpNlZGID90ySUajMo0vckD7o3MksW4mbWO7h89ObJ
+flNGhJoZhvXPyQnmSqidfA/6C+RsXVX75KsM7F8k6sKezNC7d3DeC1Jz3df6
+ZbEavWXSbHzer8pwCr1XhKOTtut+yCx6K+TUkXeVOmIteqskt0XlcqP+d/T+
+JXXleyQrDyvQowEZSb/UNyHBehqULTReKVeFo08HWUZ7pnJKhv06UGU34FJ2
+xgfn6YILz+hxV+9e9BjA8OoeSzkdhh4Dhrp/ceDtiEVPD5LcWjOv1e5GbwvI
++xXiZ+6+6G2FopwrKi4lQo8JrZ2BywpPJXpMUNqyabfzJtDTB4PW1F2FRaPo
+GQAtP67k8k9X0dsGaXsf6Qv89dAzhGDP6FMFnfvQM4TkF5Of6TCc0TOCIbOZ
+bU1+UeixQHXAMbWh2gs9Y5jzlD4/zg9FzwSqevsVLt/vw3oTCJeeUJa8v3kf
+TCCFn/3RxJw3+b/dnQ1+6qa+RK0pzmODc3i2IC+7Bj0OSPKSHQcZfehxIDcp
+P4hi/Y0eB6hzwqSnJ5/h95iCcnTgFnNtHD1TWMyyeOds/AB6ZhDoceSOOuwW
+eq/3vdxcY+dk9MwgP2yuLbYU0OOCcjLm+rAa0OOCdqS5WC2MRM8cotbltV+M
++aJnDiR97dyBdR/0zCH1mFOPRi8CPQvg+ycdi+S4o2cBf3Y5V7UM70ePB9qH
+i9+w729Fjwd0r89bvU+eRo8H1Re/y7I6rkHPErIda7ZfvTuDniVoEjhBQnoX
+elYgF1TekJh5oGcFQWfyXGdHxehZwVP/phhd1XvoWcPslt1s42vR6FkD/VBp
+c2ViPHo2wBkZzLpcFIyeDUT+XNHcUBCKng2kZ1UUZihl6NkCY8dXN7X2YvRs
+waPLszGaA+jxodVVk8Z5mY8eH1YzIqdrS+6hxweFyF6+vjKInh2kSkvjg8XT
+6NlB7r1/qDiHp+hR0FE28Vtj9RDeLwq6fXR0y9tU6FOgXQ1IV6wVYz8FPeOk
+Y3zGAedRwOy2XWJe4KEngJ5ixZBejz16Aqhxq36b8vNHTwA5U19X/fBpKHoC
+0O10XP1xXIaeAGZ7WLrFrM3zFcIHHL011lgAekJo4H3I8wtwQ08IUcMx4REy
+F/SEwPvyE3ZOfAd6Qkgcp1IONk2jJwLJzvY2actj/D8ioMXV3zxfkIeeCKqf
+fBtSqanzfuOJoJ2QCtnhCPREwF/K9jLjSNHbDqm1Uo3roTDyH7obkFA=
+     "]]}, 
+   {Hue[0.9060679774997897, 0.6, 0.6], PointBox[CompressedData["
+1:eJxF1H9M1GUcB/BDlOAEOeA4ftwB9yMM/PEHg81YG9+3LLSpgBNyDEKBhOBA
+cRBYSbZBo5kxQNkRLFpZQ1mEJxVBVihxd3B3wAGxMk+oyeEgJmpZ56EY1D6f
+nu12uz3P83qez/P5fE6VV3ogf51IJMpf/ax905CPGy36IQlaW9ZGn+Bqsp9z
+GOn3sKCISWurXJ2Pi10bk4LD0PayyErz14Xe1+8Gdlgk+E/7VXgvtbzId5TW
+3xJkYstSh02CVwrWxpwgcX+n4f1R2j8v2L+t96tb9Uasa2NR8PK4qb00Rt5d
+oTXt1O48G62/JwSIntEftZL/h5C7z+Wzhff/Kawcb/0x20Ln/SVkOr5O/MpI
+nlOI8ho8ZzaR91Aocx1pO83xLQvii7eOdRvIeyRUx7wwOTtM3oqQ0Z4Ql2Il
+T4Q9Z8OKJsy0XoQ33p7/Yd8Y+W4YOKirPsPxr4MpSaeQj9B57ijrGk/NZG89
+Jvbf1x+2kbcevZszfv+SvQ3wa+pLLjST54E9ZyZrX+T3eArpIZKlAjN5nuis
+760P5ng84Uy6eiCX8+0F6W8PZdIh8sSIMmgv3DSQtxG9WRXZT9jzhrf23cVd
+/N7e+NhDn/ahhTwflMxqVZEc7yaoUdTrYSPPF/252fpXOV4J7J3SJPdRWi/B
+tujxmg6OX4IGj6qD51fn/90e64cq5b03M/g8P/iYThu2suePiKtRUQrOlz/E
+d5ptJUby/FEQ3fh9B+c7ANPeV3bt53oIwM96k3zARJ4UCcefvWbgepLiyqGg
+nQsW8qTYnjVdrOV8BmIxMuFRM9drIPJi2o/IuZ5l6HbNLOqs5MkwMf6gPWmM
+PBm6Sj6KqOP3CoLTaVJsHSEvCLP+8dbH3G/BmH7sDPuc7xeMlMFht1Mm8oJx
+Pi1yucxEXgjmVK+NfsL5D0HVYvHzCdwfoUhZqryYxu8XisS8lYYdnO9Q5PR3
+PNhhIU8OcdyJ0gnuZzlaRFO3P7WRp8CdIE3l8Ah5CuhP9FUUsqeAPfP2MRXH
+G4YcX7cbYn6/MLgEr4VUjjccDUPt1cn8fuEo3Bl9/zr3Xzh0fZ7iOq7fCLRH
+a5e2cLwR6GnaVpM6RJ4SAxv6n/t7kOpLiYXtsdcaub+UONvzS0k6/98pkVhb
+LfuOz1PCXoqeKc6vCuXdtY17beSp0JJbbP7/vipMxR+tyeJ8qpB/Ialbx/Wu
+wksbD23WsKeG4+RMhdNMnhqFl0ZmdrOnxvzk5cvdw+Sp8UF60xMH97saKYeD
+mps4Xg0+G7fPdXI9aJDveqtrxUieBjd+Wnac5P7SICc50l3B+dLgm3h58Rfc
+b09D27hJX756/38AsUyR0A==
+     "]]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesOrigin->{0, 0},
+  PlotRange->{{0., 10.}, {0., 4.203773257033864}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{{3.5710144213145437`*^9, 3.571014461983815*^9}, {
+   3.571014494837473*^9, 3.571014509329898*^9}, 3.571014547331565*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"ArrayPlot", "[", 
+    RowBox[{
+     RowBox[{"values", "[", 
+      RowBox[{"t", ",", "64", ",", "128"}], "]"}], ",", 
+     RowBox[{"ColorFunction", "\[Rule]", "\"\<SunsetColors\>\""}]}], "]"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.5710121053561616`*^9, 3.5710122199703245`*^9}, {
+   3.571012257450377*^9, 3.571012310090451*^9}, {3.5710123420704956`*^9, 
+   3.571012389750562*^9}, {3.571012434140624*^9, 3.5710126399019127`*^9}, {
+   3.5710126745819607`*^9, 3.571012762902085*^9}, {3.5710128066081524`*^9, 
+   3.571012827018181*^9}, {3.571012929118324*^9, 3.571012930578326*^9}, 
+   3.5710133216889052`*^9, {3.571013437930068*^9, 3.571013450040085*^9}, {
+   3.5710136146203156`*^9, 3.571013683080411*^9}, {3.5710137389204893`*^9, 
+   3.5710137441104965`*^9}, {3.5710139662808075`*^9, 3.571013973320818*^9}, {
+   3.5710782924018316`*^9, 3.571078298563843*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`t$$ = 1.4740877151489258`, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`t$$], 0, 3}}, Typeset`size$$ = {360., {92., 97.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`t$56855$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`t$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`t$$, $CellContext`t$56855$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        $CellContext`values[$CellContext`t$$, 64, 128], ColorFunction -> 
+        "SunsetColors"], 
+      "Specifications" :> {{$CellContext`t$$, 0, 3, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{409., {130., 135.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.5710139749808197`*^9, 3.5710143529386234`*^9, 3.5710780715054436`*^9, 
+   3.5710781144991193`*^9, {3.5710783002798457`*^9, 3.5710783150998716`*^9}}]
+}, Open  ]]
+},
+WindowSize->{780, 656},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (October 6, 2011)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 147, 2, 31, "Input"],
+Cell[707, 24, 2040, 48, 54, "Input"],
+Cell[2750, 74, 1540, 42, 92, "Input"],
+Cell[CellGroupData[{
+Cell[4315, 120, 198, 4, 31, "Input"],
+Cell[4516, 126, 63290, 1008, 245, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[67843, 1139, 438, 11, 31, "Input"],
+Cell[68284, 1152, 3455, 63, 248, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[71776, 1220, 997, 19, 31, "Input"],
+Cell[72776, 1241, 2044, 41, 282, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
