@@ -9,7 +9,7 @@
 
 
 $igor='"C:\Program Files (x86)\WaveMetrics\Igor Pro Folder\Igor.exe"'
-$test_file=Join-Path $PSScriptRoot "xop-tests.ipf"
+$test_file=Join-Path $PSScriptRoot "xop-dmdcam-tests.ipf"
 $double_slashed=$test_file.Replace("\","\\")
 $ar='/i /x "Execute/P "LOADFILE ' + $double_slashed + '"; Execute/P "COMPILEPROCEDURES "; Execute/P "run_all_tests()""'
 
