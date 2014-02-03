@@ -33,8 +33,6 @@ namespace eas_lab.acq.DmdCam
         /// Setup a DmdCamera device
         /// </summary>
         /// <param name="screenId">Screen id.  Primary monitor=0, next monitor=1, etc</param>
-        /// <param name="expectedSize">Dimensions of screen we expect.  
-        /// Set to (0,0) to ignore; otherwise a dimension mismatch will cause an error</param>
         public void DmdCam_Create(int screenId)
         {
             Screen s = validateScreen(screenId);

@@ -6,8 +6,8 @@
 
 Function run_all_tests()
 	test_CcdCam_Reset()
-	test_CcdCam_GetSize()
 	test_CcdCam_Create()
+	test_CcdCam_GetSize()
 	test_CcdCam_SetImage()
 	//Execute/P "Quit /N"
 End

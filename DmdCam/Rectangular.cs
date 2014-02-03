@@ -1,7 +1,7 @@
 ﻿using Lab;
 using System;
 
-namespace eas_lab.acq.DmdCam
+namespace eas_lab.acq
 {
     public class Rectangular : NotifyPropertyChangedBase
     {

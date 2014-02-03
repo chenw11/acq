@@ -68,6 +68,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lab.Core.Serializers">
+      <HintPath>..\output\Lab.Core.Serializers.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.627, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -84,6 +91,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CcdCamXop.cs" />
+    <Compile Include="CcdCamXopFrame.cs" />
+    <Compile Include="CcdCam.cs" />
     <Compile Include="DisplayDeviceViewModel.cs" />
     <Compile Include="DmdCam.cs" />
     <Compile Include="DmdCamXop.cs" />

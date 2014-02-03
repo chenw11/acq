@@ -10,6 +10,9 @@ using namespace eas_lab::acq::DmdCam;
 #define XF eas_lab::acq::DmdCam::DmdCamXopFrame
 #define X (XF::Default)
 
+#define CF eas_lab::acq::CcdCam::CcdCamXopFrame
+#define C (CF::Default)
+
 #pragma pack(2)
 // parameters are listed in reverse order, with result at the end
 // this is the reverse of the resource file format
@@ -67,7 +70,7 @@ static int DmdCam_GetSize(P2<double, Lab::Acq::RectSize*>* p)
 }
 
 
-// EXPORT 2: screenId, expectedSize
+// EXPORT 2: screenId
 static int DmdCam_Create(P1<double>* p) 
 {
 	NotNull(p);
@@ -153,6 +156,46 @@ static int DmdCam_MeasurePower(P1<double>* p)
 	Do ( p->ret = X->DmdCam_MeasurePower(p->arg1); );
 }
 
+
+
+
+// EXPORT 6
+static int CcdCam_Reset(P0* p)
+{
+	NotNull( p );
+	CF::Reset();
+	return 0;
+}
+
+// EXPORT 7: deviceId
+// Valid camera handles
+// 0 = fake
+// 1 = QCam
+// 2 = Orca ER
+static int CcdCam_Create(P1<double>* p) 
+{
+	NotNull(p);
+	Do ( C->CcdCam_Create( (int)(p->arg1) ); );
+}
+
+
+// EXPORT 1: screenId, outSize
+static int CcdCam_GetSize(P2<double, Lab::Acq::RectSize*>* p)
+{
+	NotNull(p);
+	ExpectStruct(p->arg2);
+
+	Lab::Acq::RectSize outSize;
+	int err;
+	DoWith(err=, C->CcdCam_GetSize(p->arg1, outSize); );
+	*(p->arg2) = outSize;
+
+	return err;
+}
+
+
+
+
 // returns function pointers for each exported function
 static XOPIORecResult RegisterFunction()
 {
@@ -172,6 +215,12 @@ static XOPIORecResult RegisterFunction()
 			return((XOPIORecResult)DmdCam_ConfigPowerMeter);
 		case 5:
 			return((XOPIORecResult)DmdCam_MeasurePower);
+		case 6:
+			return((XOPIORecResult)CcdCam_Reset);
+		case 7:
+			return ((XOPIORecResult)CcdCam_Create);
+		case 8:
+			return ((XOPIORecResult)CcdCam_GetSize);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
 	}
