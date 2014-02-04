@@ -8,7 +8,10 @@ Function run_all_tests()
 	test_CcdCam_Reset()
 	test_CcdCam_Create()
 	test_CcdCam_GetSize()
-	test_CcdCam_SetImage()
+	test_CcdCam_SetVideoSettingsStatic()
+	test_CcdCam_Start()
+	test_CcdCam_Stop()
+	test_CcdCam_TryGetFrame()
 	//Execute/P "Quit /N"
 End
 
@@ -80,34 +83,49 @@ Structure VideoSettingsStatic
 	uint32 TriggerMode
 EndStructure
 
-Function test_CcdCam_GetVideoSettingsStatic()
+Function test_CcdCam_SetVideoSettings()
 	STRUCT VideoSettingsStatic settings
-	VARIABLE device
+	VARIABLE device, expected, actual
 	device = 0
+	settings.Binning = 1
+	settings.RoiX = 16
+	settings.RoiY = 0
+	settings.RoiWidth = 128
+	settings.RoiHeight = 256
+	settings.TriggerMode = 0
+	
 	expected = 0
-	actual = CcdCam_GetSettingsStatic(device, settings)
+	actual = CcdCam_SetVideoSettingsStatic(device, settings)
 	if (expected != actual)
-		Abort "CcdCam_GetSettingsStatic() failed"
+		Abort "CcdCam_SetVideoSettingsStatic() failed"
+	else
+		return 0
+	endif
+End
+
+Function test_CcdCam_Start()
+	VARIABLE device, expected, actual
+	device = 0
+	
+	expected = 0
+	actual = CcdCam_Start(device)
+	if (expected != actual)
+		Abort "CcdCam_Start() failed"
 	else
 		return 0
 	endif
 End
 
 
-Structure VideoFrameHeader
-	uint32 ErrorCode
-	uint32 BitsPerPixel
-	uint32 Width
-	uint32 Height
-	uint32 FrameNumber
-	uint32 TimeStamp
-	uint32 DataSizeBytes
-EndStructure
-
-Function test_CcdCam_GetImage()
-	VARIABLE expected, actual
-	STRING device = "Lab.Acq.Fake"
-	Make/O/D/N=(1280,1024) DMDwave=(p<50)*(q<150)
-	outputDevice = 1
-	CcdCam_SetImage(outputDevice, DMDwave)
+Function test_CcdCam_Stop()
+	VARIABLE device, expected, actual
+	device = 0
+	
+	expected = 0
+	actual = CcdCam_Stop(device)
+	if (expected != actual)
+		Abort "CcdCam_Stop() failed"
+	else
+		return 0
+	endif
 End
