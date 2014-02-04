@@ -46,7 +46,7 @@ namespace Lab.Acq
             else if (deviceId == 1)
                 pipeName = "Lab.Acq.QImaging.QCam";
             else if (deviceId == 2)
-                throw new System.NotImplementedException("device 2 = OrcaER is not yet implemented");
+                pipeName = "Lab.Acq.NI.Imaq";
             else
                 throw new System.ArgumentException("invalid device id: select 0, 1 or 2 for fake, qcam, or orcaER");
 

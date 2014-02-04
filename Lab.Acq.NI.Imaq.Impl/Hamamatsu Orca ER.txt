@@ -1,0 +1,466 @@
+NI-IMAQ Camera File  --  Attribute Information
+
+
+Manufacturer:  Hamamatsu
+Model       :  Orca ER
+Version     :  19980803130438
+
+
+Attribute Name :  "Contrast Enhance Gain"
+Data Type      :  Numeric
+Possible Values:  0 to 255 in steps of 1
+
+Attribute Name :  "Contrast Enhance Offset"
+Data Type      :  Numeric
+Possible Values:  0 to 255 in steps of 1
+
+Attribute Name :  "Light Mode"
+Data Type      :  String
+# of Values    :  2
+Possible Values:  "Low"
+                  "High"
+
+Attribute Name :  "Bits per pixel"
+Data Type      :  String
+# of Values    :  3
+Possible Values:  "12 Bits"
+                  "10 Bits"
+                  "8 Bits"
+
+Attribute Name :  "External Trigger Source Connector"
+Data Type      :  String
+# of Values    :  2
+Possible Values:  "BNC Connector"
+                  "D-Sub-I/O Connector"
+
+Attribute Name :  "External Trigger Polarity"
+Data Type      :  String
+# of Values    :  2
+Possible Values:  "Negative"
+                  "Positive"
+
+Attribute Name :  "Binning Mode"
+Data Type      :  String
+# of Values    :  4
+Possible Values:
+   "1x1 Binning"
+
+      Sub-Attribute  :  "Scan Mode"
+      Data Type      :  String
+      # of Values    :  2
+      Possible Values:
+         "Normal"
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 1055 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 2000 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+         "Sub Array"
+
+            Sub-Attribute  :  "Sub Array Horizontal Width"
+            Data Type      :  Numeric
+            Possible Values:  8 to 1344 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Width"
+            Data Type      :  Numeric
+            Possible Values:  16 to 1024 in steps of 16 (Pixels)
+
+            Sub-Attribute  :  "Sub Array Horizontal Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1336 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1008 in steps of 16 (Lines)
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 1055 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 2000 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+
+   "2x2 Binning"
+
+      Sub-Attribute  :  "Scan Mode"
+      Data Type      :  String
+      # of Values    :  2
+      Possible Values:
+         "Normal"
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 535 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 180 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+         "Sub Array"
+
+            Sub-Attribute  :  "Sub Array Horizontal Width"
+            Data Type      :  Numeric
+            Possible Values:  8 to 1344 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Width"
+            Data Type      :  Numeric
+            Possible Values:  16 to 1024 in steps of 16 (Pixels)
+
+            Sub-Attribute  :  "Sub Array Horizontal Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1336 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1008 in steps of 16 (Lines)
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 535 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 2000 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+
+   "4x4 Binning"
+
+      Sub-Attribute  :  "Scan Mode"
+      Data Type      :  String
+      # of Values    :  2
+      Possible Values:
+         "Normal"
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 266 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 325 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+         "Sub Array"
+
+            Sub-Attribute  :  "Sub Array Horizontal Width"
+            Data Type      :  Numeric
+            Possible Values:  8 to 1344 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Width"
+            Data Type      :  Numeric
+            Possible Values:  16 to 1024 in steps of 16 (Pixels)
+
+            Sub-Attribute  :  "Sub Array Horizontal Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1336 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1008 in steps of 16 (Lines)
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 265 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 2000 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+
+   "8x8 Binning"
+
+      Sub-Attribute  :  "Scan Mode"
+      Data Type      :  String
+      # of Values    :  2
+      Possible Values:
+         "Normal"
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 137 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 325 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+         "Sub Array"
+
+            Sub-Attribute  :  "Sub Array Horizontal Width"
+            Data Type      :  Numeric
+            Possible Values:  8 to 1344 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Width"
+            Data Type      :  Numeric
+            Possible Values:  16 to 1024 in steps of 16 (Pixels)
+
+            Sub-Attribute  :  "Sub Array Horizontal Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1336 in steps of 8
+
+            Sub-Attribute  :  "Sub Array Vertical Offset"
+            Data Type      :  Numeric
+            Possible Values:  0 to 1008 in steps of 16 (Lines)
+
+            Sub-Attribute  :  "Acquire Mode"
+            Data Type      :  String
+            # of Values    :  2
+            Possible Values:
+               "Normal"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  3
+                  Possible Values:
+                     "Normal"
+                     "Electronic Shutter"
+
+                        Sub-Attribute  :  "Electronic Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 137 in steps of 1 (line number)
+
+                     "Frame Blanking"
+
+                        Sub-Attribute  :  "Frame Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 2000 in steps of 1 (frame number)
+
+
+               "External"
+
+                  Sub-Attribute  :  "Exposure Time Setting"
+                  Data Type      :  String
+                  # of Values    :  2
+                  Possible Values:
+                     "External Edge"
+
+                        Sub-Attribute  :  "External Shutter Time"
+                        Data Type      :  Numeric
+                        Possible Values:  1 to 95040 in steps of 1
+
+                     "External Level"
+
+
+
+

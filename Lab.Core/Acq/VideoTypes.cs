@@ -69,6 +69,7 @@ namespace Lab.Acq
         [ProtoMember(1)]
         public BinningMode Binning { get { return binning; } set { binning = value; } }
 
+
         [ProtoMember(2)]
         public int RoiX { get; set; }
 
@@ -81,7 +82,9 @@ namespace Lab.Acq
         [ProtoMember(5)]
         public int RoiHeight { get; set; }
 
-
+        /// <summary>
+        /// Post-binning ROI
+        /// </summary>
         public NaturalRect Roi
         {
             get { return new NaturalRect(RoiX, RoiY, RoiWidth, RoiHeight); }
