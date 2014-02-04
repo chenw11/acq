@@ -299,7 +299,7 @@ namespace Lab.Acq
             //session.SignalEvents.AddSignal("Frame done",
             //    new ImaqSignalEventDescriptor(ImaqSignalStatus.FrameDone,
             //        ImaqSignalState.High));
-
+            reqStopStreaming.Reset();
 
             RectSize size = PostBinningRoiSize;
             bool recycleBuffers = (buffers != null)
@@ -396,15 +396,15 @@ namespace Lab.Acq
 
         public void Stop()
         {
-            if (!IsRunning)
-                throw new ImaqException("Not currently running.");
-            var st = streamingThread;
-            if (st == null)
-                throw new ImaqException("Somehow streaming thread is null");
-            Trace.TraceInformation("Requesting streaming thread to quit....");
             reqStopStreaming.Set();
-            streamingThread.Join();
-            isStreaming = false;
+            if (IsRunning)
+            {
+                Trace.TraceInformation("Requesting streaming thread to quit....");
+                var st = streamingThread;
+                if (st != null)
+                    st.Join();
+                isStreaming = false;
+            }
         }
 
 

@@ -84,8 +84,8 @@ namespace Lab.Acq
 
         protected override void RunOnceDisposer()
         {
-            cameraReader.Dispose();
-            externalDataServer.Close();
+            cameraReader.TryDispose();
+            externalDataServer.TryDispose();
         }
 
 
