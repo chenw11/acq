@@ -145,6 +145,9 @@ BEGIN
 	P0("CcdCam_Reset\0"),						// EXPORT 6
 	P1("CcdCam_Create\0", TDbl),				// EXPORT 7: deviceId
 	P2("CcdCam_GetSize\0", TDbl, TStruct),		// EXPORT 8: deviceId, outSize
+	P2("CcdCam_SetVideoSettingsStatic\0", TDbl, TStruct), // EXPORT 9: deviceId, VideoSettingsStatic
+	P1("CcdCam_Start\0", TDbl),					// EXPORT 10: deviceId
+	P1("CcdCam_Stop\0", TDbl),					// EXPORT 11: deviceId
 	// More function descriptions can appear here.
 	
 	0,								// NOTE: 0 required to terminate the resource.

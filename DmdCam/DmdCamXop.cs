@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace eas_lab.acq.DmdCam
+namespace Lab.Acq
 {
     public class DmdCamXop : Disposable
     {

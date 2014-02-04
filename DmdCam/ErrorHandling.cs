@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace eas_lab.acq
+namespace Lab.Acq
 {
     public enum ErrorCode : int
     {

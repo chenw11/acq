@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace eas_lab.acq.DmdCam
+namespace Lab.Acq
 {
     public interface IDisplayDevice : IDisposable
     {

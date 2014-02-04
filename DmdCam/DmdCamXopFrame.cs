@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace eas_lab.acq.DmdCam
+namespace Lab.Acq
 {
     public static class DmdCamXopFrame
     {

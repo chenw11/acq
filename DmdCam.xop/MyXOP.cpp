@@ -4,13 +4,13 @@
 #include "MyXOP.h"
 
 
-using namespace eas_lab::acq::DmdCam;
+using namespace Lab::Acq;
 
 
-#define XF eas_lab::acq::DmdCam::DmdCamXopFrame
+#define XF DmdCamXopFrame
 #define X (XF::Default)
 
-#define CF eas_lab::acq::CcdCam::CcdCamXopFrame
+#define CF CcdCamXopFrame
 #define C (CF::Default)
 
 #pragma pack(2)
@@ -179,7 +179,7 @@ static int CcdCam_Create(P1<double>* p)
 }
 
 
-// EXPORT 1: screenId, outSize
+// EXPORT 8: deviceId, outSize
 static int CcdCam_GetSize(P2<double, Lab::Acq::RectSize*>* p)
 {
 	NotNull(p);
@@ -192,6 +192,29 @@ static int CcdCam_GetSize(P2<double, Lab::Acq::RectSize*>* p)
 
 	return err;
 }
+
+// EXPORT 9: deviceId, VideoSettingsStatic
+static int CcdCam_SetVideoSettingsStatic(P2<double, Lab::Acq::VideoSettingsStaticStruct*>* p)
+{
+	NotNull(p);
+	ExpectStruct(p->arg2);
+	Do( C->CcdCam_SetVideoSettingsStatic(p->arg1, *(p->arg2)); );
+}
+
+// EXPORT 10: deviceId
+static int CcdCam_Start(P1<double>* p) 
+{
+	NotNull(p);
+	Do ( C->CcdCam_Start( (int)(p->arg1) ); );
+}
+
+// EXPORT 11: deviceId
+static int CcdCam_Stop(P1<double>* p) 
+{
+	NotNull(p);
+	Do ( C->CcdCam_Stop( (int)(p->arg1) ); );
+}
+
 
 
 
@@ -221,6 +244,8 @@ static XOPIORecResult RegisterFunction()
 			return ((XOPIORecResult)CcdCam_Create);
 		case 8:
 			return ((XOPIORecResult)CcdCam_GetSize);
+		case 9:
+			return ((XOPIORecResult)CcdCam_SetVideoSettingsStatic);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
 	}
@@ -268,7 +293,7 @@ static void GlobalSetup()
 static XOPIORecResult GlobalCleanup() 
 {
 	// do cleanup of any remaining managed code
-	eas_lab::acq::DmdCam::DmdCamXopFrame::GlobalCleanup();
+	DmdCamXopFrame::GlobalCleanup();
 	return 0; 
 } 
 

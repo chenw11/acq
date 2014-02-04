@@ -1,9 +1,33 @@
 ﻿using Lab.Acq;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
-namespace eas_lab.acq.CcdCam
+namespace Lab.Acq
 {
+    public struct VideoSettingsStaticStruct
+    {
+        public BinningMode Binning;
+        public int RoiX;
+        public int RoiY;
+        public int RoiWidth;
+        public int RoiHeight;
+        public TriggeringMode Trigger;
+
+        public VideoSettingsStatic AsRefType()
+        {
+            return new VideoSettingsStatic()
+            {
+                Binning = this.Binning,
+                RoiX = this.RoiX,
+                RoiY = this.RoiY,
+                RoiWidth = this.RoiWidth,
+                RoiHeight = this.RoiHeight,
+                Trigger = this.Trigger
+            };
+        }
+    }
+
     public class CcdCamXop : Disposable
     {
         readonly ConcurrentDictionary<int, CcdCam> cams = new ConcurrentDictionary<int, CcdCam>();
@@ -33,10 +57,34 @@ namespace eas_lab.acq.CcdCam
             cams.TryAdd(deviceId, c);
         }
 
+
+        CcdCam getCam(int deviceId)
+        {
+            try { return cams[deviceId]; }
+            catch (KeyNotFoundException)
+            {
+                throw new Exception("Device not initialized.  Call CcdCam_Create first");
+            }
+        }
+
         public void CcdCam_GetSize(int deviceId, out RectSize size)
         {
-            CcdCam c = cams[deviceId];
-            size = c.Size;
+            size = getCam(deviceId).Size;
+        }
+
+        public void CcdCam_SetVideoSettingsStatic(int deviceId, VideoSettingsStaticStruct settings)
+        {
+            getCam(deviceId).SetVideoSettingsStatic(settings);
+        }
+
+        public void CcdCam_Start(int deviceId)
+        {
+            getCam(deviceId).Start();
+        }
+
+        public void CcdCam_Stop(int deviceId)
+        {
+            getCam(deviceId).Stop();
         }
 
         protected override void RunOnceDisposer()

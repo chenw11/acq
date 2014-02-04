@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Forms;
 
-namespace eas_lab.acq.DmdCam
+namespace Lab.Acq
 {
     /// <summary>
     /// Defines a single instance of a DMD-camera

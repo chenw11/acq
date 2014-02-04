@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="eas_lab.acq.DmdCam.PreviewDisplayView"
+﻿<UserControl x:Class="Lab.Acq.PreviewDisplayView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

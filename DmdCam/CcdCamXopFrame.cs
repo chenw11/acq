@@ -1,7 +1,7 @@
 ﻿using System;
 using eas_lab.acq.DmdCam;
 
-namespace eas_lab.acq.CcdCam
+namespace Lab.Acq
 {
     public static class CcdCamXopFrame
     {
