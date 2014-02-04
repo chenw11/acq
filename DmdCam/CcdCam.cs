@@ -77,6 +77,30 @@ namespace Lab.Acq
         {
             cameraReader.Dispose();
         }
+
+
+        public static void test()
+        {
+            var c = new CcdCam("Lab.Acq.Fake");
+            var size = c.Size;
+            VideoSettingsStaticStruct s;
+            s.Binning = BinningMode.Binning1x1;
+            s.RoiX = 16;
+            s.RoiY = 32;
+            s.RoiWidth = 256;
+            s.RoiHeight = 128;
+            s.Trigger = 0;
+            c.SetVideoSettingsStatic(s);
+
+            c.Start();
+            VideoFrame f;
+            bool ok = c.TryGetFrame(out f);
+            Console.WriteLine(ok);
+            if (ok)
+                Console.WriteLine(f.FrameNumber);
+            c.Stop();
+            c.Dispose();
+        }
     }
 
 }

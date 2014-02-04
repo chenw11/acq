@@ -243,7 +243,10 @@ static int CcdCam_TryGetFrame(P2<double, waveHndl>* p)
 
 	bool gotFrame = false;
 	VideoFrame^ outFrame;
-	Do(gotFrame = C->CcdCam_TryGetFrame( (int)(p->arg1) , outFrame ); );
+	DoWith(err=, gotFrame = C->CcdCam_TryGetFrame( (int)(p->arg1) , outFrame ); );
+
+	if (err != 0)
+		return err;
 
 	if (!gotFrame)
 	{

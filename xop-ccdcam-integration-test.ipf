@@ -82,17 +82,21 @@ Function test_CcdCam_Acquire()
 	print "Started acquisition"
 
 	//
-	// Load in some frames
+	// Read the first 10 frames
 	//
-	frameNum = CcdCam_TryGetFrame(device, frame); AbortOnRTE
-	print "Frame", frameNum, "has wavestats"
-	WaveStats frame
+	do
+		frameNum = CcdCam_TryGetFrame(device, frame); AbortOnRTE
+		if (frameNum >= 0)
+			print "Got frame", frameNum
+			if (frameNum == 10)
+				print "And the wave stats are..."
+				WaveStats frame
+			endif
+		else
+			Sleep /T 1
+		endif
+	while (frameNum < 10)
 
-	frameNum = CcdCam_TryGetFrame(device, frame); AbortOnRTE
-	print "Frame", frameNum, "aquired"
-
-	frameNum = CcdCam_TryGetFrame(device, frame); AbortOnRTE
-	print "Frame", frameNum, "aquired"
 
 	//
 	// Stop acquiring frames
