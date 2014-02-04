@@ -15,9 +15,17 @@ namespace Lab.Acq
             return File.Exists(PipePrefix + coordName);
         }
 
+
+        static string getImplFullPath(string exeName)
+        {
+            var myPath = System.Reflection.Assembly.GetAssembly(typeof(DataServer)).Location;
+            return Path.Combine(Path.GetDirectoryName(myPath), exeName);
+        }
+
         static Process LaunchExternal_NoWait(string implName, string coordinationName)
         {
-            ProcessStartInfo ps = new ProcessStartInfo(implName + ".Impl.exe", coordinationName);
+            string exePath = getImplFullPath(implName + ".Impl.exe");
+            ProcessStartInfo ps = new ProcessStartInfo(exePath, coordinationName);
             ps.WindowStyle = ProcessWindowStyle.Minimized;
             return Process.Start(ps);
         }

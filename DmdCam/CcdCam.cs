@@ -2,6 +2,7 @@
 using Lab.Acq;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -14,6 +15,7 @@ namespace Lab.Acq
     {
         readonly CameraReader<ICameraFlow, RemoteClientCameraFlow> cameraReader;
         readonly ConcurrentQueue<VideoFrame> buffer = new ConcurrentQueue<VideoFrame>();
+        readonly Process externalDataServer;
 
         int bufferCapacity = 8;
 
@@ -31,7 +33,14 @@ namespace Lab.Acq
 
         public CcdCam(string pipeName)
         {
+            if (!DataServer.IsRunning(pipeName))
+                this.externalDataServer = DataServer.LaunchExternal(pipeName, waitUntilReady: true);
+
             cameraReader = new CameraReader<ICameraFlow, RemoteClientCameraFlow>(pipeName, new AcqProtoSerializer());
+
+            // ensure we stop the server, if we're the ones who started it
+            cameraReader.TerminateServerOnStop = (this.externalDataServer != null);
+
             cameraReader.DataSource.NewData += DataSource_NewData;
         }
 
@@ -76,6 +85,7 @@ namespace Lab.Acq
         protected override void RunOnceDisposer()
         {
             cameraReader.Dispose();
+            externalDataServer.Close();
         }
 
 
