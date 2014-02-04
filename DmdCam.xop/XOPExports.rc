@@ -117,6 +117,10 @@ BEGIN
 	"Generic multidim wave failure\0",  // 7
 	"Incorrect dimension on wave\0",  // 8
 	"Invalid rectangle.\0",  // 9
+	"Expected Unsigned Word 16-bit (integer) wave.\0", // 10
+	"Framegrabber returned an error.  More info may be available via GetScrapText(). \0", // 11
+	"Buffer size mismatch.  The camera is returning data in an unexpected format. \0", // 12
+	"Error executing memcpy_s. \0", // 13
 	// You can add error messages here.
 	
 	0,								// NOTE: 0 required to terminate the resource.
@@ -148,6 +152,7 @@ BEGIN
 	P2("CcdCam_SetVideoSettingsStatic\0", TDbl, TStruct), // EXPORT 9: deviceId, VideoSettingsStatic
 	P1("CcdCam_Start\0", TDbl),					// EXPORT 10: deviceId
 	P1("CcdCam_Stop\0", TDbl),					// EXPORT 11: deviceId
+	P2("CcdCam_TryGetFrame\0", TDbl, TWave),	// EXPORT 12: deviceId, output image wave
 	// More function descriptions can appear here.
 	
 	0,								// NOTE: 0 required to terminate the resource.

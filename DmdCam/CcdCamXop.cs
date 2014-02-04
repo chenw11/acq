@@ -87,6 +87,11 @@ namespace Lab.Acq
             getCam(deviceId).Stop();
         }
 
+        public bool CcdCam_TryGetFrame(int deviceId, out VideoFrame frame)
+        {
+            return getCam(deviceId).TryGetFrame(out frame);
+        }
+
         protected override void RunOnceDisposer()
         {
             foreach (var kvp in cams)

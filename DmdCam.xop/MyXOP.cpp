@@ -215,7 +215,84 @@ static int CcdCam_Stop(P1<double>* p)
 	Do ( C->CcdCam_Stop( (int)(p->arg1) ); );
 }
 
+// EXPORT 12: deviceId, FrameDataWave, return frame #
+static int CcdCam_TryGetFrame(P2<double, waveHndl>* p) 
+{
+	NotNull(p);
+	Handle wavH = p->arg2;
 
+	if (wavH == NULL)
+		return(NON_EXISTENT_WAVE);
+
+	if (WaveType(wavH) != (NT_UNSIGNED | NT_I16))
+		return(REQUIRES_U16_WAVE);
+
+	int numDims = 0;
+	CountInt dimSizes[MAX_DIMENSIONS+1];
+
+	int err;
+	if (err=MDGetWaveDimensions(wavH, &numDims, dimSizes))
+		return err;
+
+	if (numDims != 2)
+		return(INCORRECT_NUM_DIMS);
+
+	int n = WavePoints(wavH);
+	if (n < 1)
+		return(MULTIDIM_FAIL);
+
+	bool gotFrame = false;
+	VideoFrame^ outFrame;
+	Do(gotFrame = C->CcdCam_TryGetFrame( (int)(p->arg1) , outFrame ); );
+
+	if (!gotFrame)
+	{
+		p->ret = -1;
+		return 0;
+	}
+
+	if (outFrame->ErrorCode != 0 || outFrame->FrameNumber < 0)
+	{
+		p->ret = -2;
+		CF::Error(System::String::Format(
+			"frame error code: {0}; frame number: {1}",
+			outFrame->ErrorCode, outFrame->FrameNumber));
+		return(FRAMEGRABBER_ERROR);
+	}
+
+	int nElements = outFrame->Width * outFrame->Height;
+	if (nElements != dimSizes[COLUMNS] * dimSizes[ROWS])
+	{
+		p->ret = -3;
+		return(INVALID_RECT);
+	}
+
+	int nBytes = nElements * sizeof(UINT16);
+	if (outFrame->DataSizeBytes != nBytes)
+	{
+		p->ret = -4;
+		return(BUFFER_SIZE_MISMATCH);
+	}
+
+	// get pointer to wave data start
+	BCInt dataOffset;
+	UINT16* dp;
+	int result;
+	if (result=MDAccessNumericWaveData(wavH, kMDWaveAccessMode0, &dataOffset))
+		return result;
+	dp = (UINT16*)((char*)(*wavH) + dataOffset);// DEREFERENCE
+
+	// now copy data directly
+	array<byte, 1> ^ srcData = outFrame->Data;
+	pin_ptr<unsigned char> pgcar = &srcData[0];
+
+	err = memcpy_s(dp, nBytes, pgcar, nBytes);
+	if (err)
+		return (MEMCPY_S_ERR);
+	
+	p->ret = outFrame->FrameNumber;
+	return err;
+}
 
 
 
@@ -246,6 +323,12 @@ static XOPIORecResult RegisterFunction()
 			return ((XOPIORecResult)CcdCam_GetSize);
 		case 9:
 			return ((XOPIORecResult)CcdCam_SetVideoSettingsStatic);
+		case 10:
+			return ((XOPIORecResult)CcdCam_Start);
+		case 11:
+			return ((XOPIORecResult)CcdCam_Stop);
+		case 12:
+			return ((XOPIORecResult)CcdCam_TryGetFrame);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
 	}
