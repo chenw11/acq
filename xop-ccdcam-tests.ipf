@@ -27,7 +27,7 @@ Function test_CcdCam_Reset()
 	endif
 End
 
-// Valid camera handles
+// Valid camera device IDs
 // 0 = fake
 // 1 = QCam
 // 2 = Orca ER
