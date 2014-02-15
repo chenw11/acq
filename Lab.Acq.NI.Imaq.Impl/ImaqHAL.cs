@@ -314,6 +314,8 @@ namespace Lab.Acq
                 Trace.TraceInformation("Setting up buffer ring...");
                 session.RingSetup(buffers, 0, false);
             }
+            Trace.TraceInformation("Setting up 'frame start' output signal lines");
+            SetupOutputSignal_FrameStart(rtsiLine: 0);
 
             Trace.TraceInformation("Starting acquisition...");
             session.Start();
