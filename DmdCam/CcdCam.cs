@@ -67,6 +67,11 @@ namespace Lab.Acq
             cameraReader.Flow.SettingsStatic = settings.AsRefType();
         }
 
+        public void SetVideoSettingsDynamic(VideoSettingsDynamicStruct settings)
+        {
+            cameraReader.Flow.SettingsDynamic = settings.AsRefType();
+        }
+
         public void Start()
         {
             cameraReader.DataSource.Start();

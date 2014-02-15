@@ -298,6 +298,19 @@ static int CcdCam_TryGetFrame(P2<double, waveHndl>* p)
 }
 
 
+// EXPORT 13: deviceId, VideoSettingsStatic
+static int CcdCam_SetVideoSettingsDynamic(P2<double, Lab::Acq::VideoSettingsDynamicStruct*>* p)
+{
+	NotNull(p);
+	Lab::Acq::VideoSettingsDynamicStruct* d = p->arg2;
+	ExpectStruct(d);
+	bool ok = (0 <= d->AnalogGain) && (d->AnalogGain <= 255);
+	ok &= (0 <= d->AnalogOffset) && (d->AnalogOffset <= 255);
+	if (!ok)
+		return (ANALOG_RANGE_ERROR);
+	Do( C->CcdCam_SetVideoSettingsDynamic(p->arg1, *(p->arg2)); );
+}
+
 
 // returns function pointers for each exported function
 static XOPIORecResult RegisterFunction()
@@ -332,6 +345,8 @@ static XOPIORecResult RegisterFunction()
 			return ((XOPIORecResult)CcdCam_Stop);
 		case 12:
 			return ((XOPIORecResult)CcdCam_TryGetFrame);
+		case 13:
+			return ((XOPIORecResult)CcdCam_SetVideoSettingsDynamic);
 		// add more cases for more exported functions here
 		// be sure to also add them to the XOPExports.rc resource file
 	}

@@ -15,13 +15,17 @@ Structure VideoSettingsStatic
 	uint32 TriggerMode
 EndStructure
 
+Structure VideoSettingsDynamic
+	float AnalogGain
+	uint32 AnalogOffset
+EndStructure
 
 Function test_CcdCam_Acquire()
 	VARIABLE device, frameNum
 
 	STRUCT RectSize size
 	STRUCT VideoSettingsStatic settings
-
+	STRUCT VideoSettingsDynamic dyn_settings
 	//
 	// Ensure system is in a known good state:
 	//
@@ -68,6 +72,20 @@ Function test_CcdCam_Acquire()
 
 	CcdCam_SetVideoSettingsStatic(device, settings); AbortOnRTE
 	print "Video settings set"
+
+
+	//
+	// Set up the dynamic analog contrast adjustments
+	//   On the Orca Camera these can be between 0 and 255
+	//   These settings aren't yet implemented on the QImaging camera
+	//
+	if (device == 2)
+		dyn_settings.AnalogGain = 0
+		dyn_settings.AnalogOffset = 0
+		CcdCam_SetVideoSettingsDynamic(device, dyn_settings); AbortOnRTE
+		print "Analog contrast adjustments set"
+	endif
+
 
 	//
 	// Create a 2D wave to hold the aquired frames

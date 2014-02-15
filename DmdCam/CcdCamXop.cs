@@ -28,6 +28,21 @@ namespace Lab.Acq
         }
     }
 
+    public struct VideoSettingsDynamicStruct
+    {
+        public float AnalogGain;
+        public int AnalogOffset;
+
+        public VideoSettingsDynamic AsRefType()
+        {
+            return new VideoSettingsDynamic()
+            {
+                AnalogGain_dB = this.AnalogGain,
+                AnalogOffset = this.AnalogOffset
+            };
+        }
+    }
+
     public class CcdCamXop : Disposable
     {
         readonly ConcurrentDictionary<int, CcdCam> cams = new ConcurrentDictionary<int, CcdCam>();
@@ -75,6 +90,13 @@ namespace Lab.Acq
         public void CcdCam_SetVideoSettingsStatic(int deviceId, VideoSettingsStaticStruct settings)
         {
             getCam(deviceId).SetVideoSettingsStatic(settings);
+        }
+
+        public void CcdCam_SetVideoSettingsDynamic(int deviceId, VideoSettingsDynamicStruct settings)
+        {
+            if (deviceId != 2)
+                throw new ArgumentException("This is only supported on the Orca ER camera, for now");
+            getCam(deviceId).SetVideoSettingsDynamic(settings);
         }
 
         public void CcdCam_Start(int deviceId)
